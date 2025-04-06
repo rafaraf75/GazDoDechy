@@ -1,0 +1,17 @@
+# Ogólne
+*.log
+.env
+
+# Node.js
+node_modules/
+dist/
+build/
+
+# React
+frontend/build/
+frontend/node_modules/
+
+# IDE / systemowe
+.DS_Store
+.vscode/
+Thumbs.db
