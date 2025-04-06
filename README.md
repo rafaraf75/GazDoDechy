@@ -1,0 +1,1 @@
+# GazDoDechy – platforma społecznościowa
