@@ -19,6 +19,8 @@ const Login = ({ setIsLoggedIn }) => {
       });
 
       const user = res.data.user;
+      const userId = user.id;
+      localStorage.setItem('userId', userId);
       const name = user.user_metadata?.username || user.email;
       const role = res.data.role || 'user';
 
