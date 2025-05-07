@@ -3,8 +3,9 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import Register from './components/Register';
-import Layout from './components/Layout';
 import UserPanel from './components/UserPanel';
+import AdminPanel from './components/AdminPanel';
+import Navbar from './components/Navbar';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -20,6 +21,7 @@ function App() {
 
   return (
     <Router>
+      <Navbar />
       <Routes>
         <Route
           path="/"
@@ -34,11 +36,19 @@ function App() {
           path="/dashboard"
           element={
             isLoggedIn ? (
-              <Layout>
-                <Dashboard setIsLoggedIn={setIsLoggedIn} />
-              </Layout>
+              <Dashboard setIsLoggedIn={setIsLoggedIn} />
             ) : (
               <Navigate to="/login" />
+            )
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            isLoggedIn && localStorage.getItem('role') === 'admin' ? (
+              <AdminPanel />
+            ) : (
+              <Navigate to="/dashboard" />
             )
           }
         />
