@@ -16,7 +16,7 @@ const Navbar = () => {
   return (
     <nav className="bg-white shadow p-4 flex justify-between items-center">
       <div className="text-xl font-semibold text-gray-800">
-        <Link to="/dashboard">🚗 GazDoDechy</Link>
+        <Link to="/dashboard">GazDoDechy</Link>
       </div>
 
       <div className="flex items-center gap-4">
