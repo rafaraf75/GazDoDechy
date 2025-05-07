@@ -20,9 +20,11 @@ const Login = ({ setIsLoggedIn }) => {
 
       const user = res.data.user;
       const name = user.user_metadata?.username || user.email;
+      const role = res.data.role || 'user';
 
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('username', name);
+      localStorage.setItem('role', role);
       setUsername(name);
       setInfo(`Zalogowano jako: ${name}`);
       console.log('Logowanie OK — przekierowuję');

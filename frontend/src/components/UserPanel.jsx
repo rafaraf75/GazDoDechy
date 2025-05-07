@@ -9,7 +9,6 @@ const UserPanel = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10 px-4">
       <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-lg p-6">
         <h1 className="text-2xl font-bold text-gray-800 mb-4">Twój profil</h1>
         <p className="text-gray-700 mb-2">
@@ -19,7 +18,6 @@ const UserPanel = () => {
           Tutaj możesz dodać więcej informacji o użytkowniku — np. edycję danych, zdjęcie profilowe, zmiana hasła itp.
         </p>
       </div>
-    </div>
   );
 };
 
