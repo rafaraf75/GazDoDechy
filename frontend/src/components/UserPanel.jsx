@@ -41,7 +41,6 @@ const UserPanel = () => {
     const trimmedBio = formData.bio.trim();
     const trimmedUrl = formData.profilePicture.trim();
 
-    // Walidacja
     if (!trimmedUsername) {
       alert('Nazwa użytkownika nie może być pusta.');
       return;
@@ -150,6 +149,72 @@ const UserPanel = () => {
           Zapisz zmiany
         </button>
       </form>
+      <hr className="my-6" />
+<h2 className="text-xl font-semibold mb-2">Zmiana hasła</h2>
+<form
+  onSubmit={async (e) => {
+    e.preventDefault();
+    const oldPassword = e.target.oldPassword.value;
+    const newPassword = e.target.newPassword.value;
+    const confirmPassword = e.target.confirmPassword.value;
+    const email = formData.email;
+
+    if (!oldPassword || !newPassword || !confirmPassword) {
+      alert("Wszystkie pola muszą być wypełnione.");
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      alert("Nowe hasło musi mieć co najmniej 6 znaków.");
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      alert("Nowe hasła się nie zgadzają.");
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/change-password', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, oldPassword, newPassword }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.message || 'Błąd zmiany hasła');
+      } else {
+        alert('Hasło zostało zmienione!');
+        e.target.reset();
+      }
+    } catch (err) {
+      console.error('Błąd połączenia z serwerem:', err);
+      alert('Nie udało się zmienić hasła.');
+    }
+  }}
+  className="space-y-4"
+>
+  <div>
+    <label className="block font-semibold">Stare hasło</label>
+    <input type="password" name="oldPassword" className="w-full border rounded p-2" />
+  </div>
+  <div>
+    <label className="block font-semibold">Nowe hasło</label>
+    <input type="password" name="newPassword" className="w-full border rounded p-2" />
+  </div>
+  <div>
+    <label className="block font-semibold">Powtórz nowe hasło</label>
+    <input type="password" name="confirmPassword" className="w-full border rounded p-2" />
+  </div>
+  <button type="submit" className="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700">
+    Zmień hasło
+  </button>
+</form>
+
     </div>
   );
 };
