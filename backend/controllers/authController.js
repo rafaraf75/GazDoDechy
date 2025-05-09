@@ -84,3 +84,41 @@ exports.loginUser = async (req, res) => {
     res.status(500).json({ message: 'Błąd logowania' });
   }
 };
+
+exports.changePassword = async (req, res) => {
+  const { email, oldPassword, newPassword } = req.body;
+
+  try {
+    // 1. Weryfikacja starego hasła
+    const { data, error: loginError } = await supabase.auth.signInWithPassword({
+      email,
+      password: oldPassword,
+    });
+
+    if (loginError || !data.user) {
+      return res.status(401).json({ message: 'Stare hasło jest nieprawidłowe.' });
+    }
+
+    // 2. Pobranie ID użytkownika
+    const userId = data.user.id;
+
+    // 3. Zmiana hasła przez admina
+    const { error: updateError } = await supabaseAdmin.auth.admin.updateUserById(userId, {
+      password: newPassword,
+    });
+
+    if (updateError) {
+      console.error(updateError);
+      return res.status(400).json({ message: 'Nie udało się zmienić hasła.' });
+    }
+
+    res.status(200).json({ message: 'Hasło zostało zmienione.' });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Błąd serwera.' });
+  }
+};
+
+
+
