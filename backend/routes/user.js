@@ -6,5 +6,6 @@ router.get('/', userController.getAllUsers);
 router.get('/full', userController.getAllUsersWithStatus);
 router.get('/:id', userController.getUserById);
 router.put('/:id', userController.updateUserById);
+router.put('/:id/role', userController.updateUserRole);
 
 module.exports = router;

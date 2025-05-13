@@ -7,8 +7,8 @@ const {
   getAllUserStatuses
 } = require('../controllers/userStatusController');
 
-router.post('/block', blockUser);
-router.post('/unblock', unblockUser);
+router.post('/block/:id', blockUser);
+router.post('/unblock/:id', unblockUser);
 router.get('/:userId', getUserStatus);
 router.get('/', getAllUserStatuses);
 

@@ -44,7 +44,7 @@ exports.getAllUserStatuses = async (req, res) => {
 
 exports.blockUser = async (req, res) => {
   const userId = req.params.id;
-  const { reason } = req.body;
+  const reason = req.body?.reason || 'Brak powodu';
 
   try {
     const { error } = await supabaseAdmin
@@ -52,7 +52,7 @@ exports.blockUser = async (req, res) => {
       .upsert({
         user_id: userId,
         is_blocked: true,
-        block_reason: reason || 'Brak powodu',
+        block_reason: reason,
         blocked_at: new Date().toISOString(),
         unblocked_at: null
       });

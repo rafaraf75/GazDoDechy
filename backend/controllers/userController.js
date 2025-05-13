@@ -103,3 +103,26 @@ exports.updateUserById = async (req, res) => {
     res.status(500).json({ message: 'Błąd serwera przy aktualizacji' });
   }
 };
+
+// PUT /api/users/:id/role – aktualizacja roli użytkownika
+exports.updateUserRole = async (req, res) => {
+  const { id } = req.params;
+  const { role } = req.body;
+
+  try {
+    const { error } = await supabaseAdmin
+      .from('users')
+      .update({ role })
+      .eq('id', id);
+
+    if (error) {
+      console.error('Błąd aktualizacji roli:', error);
+      return res.status(500).json({ message: 'Błąd aktualizacji roli' });
+    }
+
+    res.status(200).json({ message: 'Rola została zaktualizowana' });
+  } catch (err) {
+    console.error('Błąd serwera:', err);
+    res.status(500).json({ message: 'Błąd serwera' });
+  }
+};

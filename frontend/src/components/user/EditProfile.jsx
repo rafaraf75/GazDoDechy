@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import Layout from '../Layout';
+import UserSidebar from './UserSidebar';
+import RightSidebar from '../RightSidebar';
 import axios from 'axios';
 
-const UserPanel = () => {
+const EditProfile = () => {
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -72,6 +75,7 @@ const UserPanel = () => {
   };
 
   return (
+    <Layout leftSidebar={<UserSidebar />} rightSidebar={<RightSidebar />}>
     <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-lg p-6">
       <h1 className="text-2xl font-bold mb-4">Twój profil</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -214,9 +218,9 @@ const UserPanel = () => {
     Zmień hasło
   </button>
 </form>
-
     </div>
+    </Layout>
   );
 };
 
-export default UserPanel;
+export default EditProfile;
