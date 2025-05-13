@@ -15,6 +15,11 @@ import UserAds from './components/user/UserAds';
 import UserFollowing from './components/user/UserFollowing';
 import UserEvents from './components/user/UserEvents';
 
+import Market from './components/sections/Market';
+import Tips from './components/sections/Tips';
+import Events from './components/sections/Events';
+import Groups from './components/sections/Groups';
+import LiveHelp from './components/sections/LiveHelp';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -51,6 +56,12 @@ function App() {
         <Route path="/user/ads" element={<UserAds />} />
         <Route path="/user/following" element={<UserFollowing />} />
         <Route path="/user/events" element={<UserEvents />} />
+
+        <Route path="/market" element={<Market />} />
+        <Route path="/tips" element={<Tips />} />
+        <Route path="/events" element={<Events />} />
+        <Route path="/groups" element={<Groups />} />
+        <Route path="/help" element={<LiveHelp />} />
 
         {/* Panel główny (dashboard) */}
         <Route

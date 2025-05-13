@@ -59,7 +59,7 @@ const UserProfile = () => {
 
       <div className="bg-white rounded-lg shadow p-4 mt-4">
         <h3 className="text-lg font-semibold mb-2">Posty użytkownika</h3>
-        <p className="text-sm text-gray-500 italic">Brak postów – wkrótce tu się coś pojawi</p>
+        <p className="text-sm text-gray-500 italic">posty...</p>
       </div>
     </Layout>
   );

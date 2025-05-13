@@ -9,7 +9,7 @@ const RightSidebar = () => (
       <li> Adam <span className="text-gray-400 text-xs">(offline)</span></li>
       <li> Ania <span className="text-green-500 text-xs">(online)</span></li>
     </ul>
-    <p className="text-xs italic mt-4 text-gray-400">Tu bedzie czat</p>
+    <p className="text-xs italic mt-4 text-gray-400">czat....</p>
   </div>
 );
 
