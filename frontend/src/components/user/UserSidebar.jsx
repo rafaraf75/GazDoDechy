@@ -3,15 +3,15 @@ import { Link } from 'react-router-dom';
 
 const UserSidebar = () => {
   return (
-    <div className="bg-white rounded-lg shadow p-4 space-y-3">
-      <h3 className="font-bold text-lg">Mój profil</h3>
-      <ul className="space-y-2 text-blue-600">
-        <li><Link to="/user"> Oś czasu</Link></li>
-        <li><Link to="/user/settings"> Edytuj profil</Link></li>
-        <li><Link to="/user/vehicles"> Moje pojazdy</Link></li>
-        <li><Link to="/user/ads"> Moje ogłoszenia</Link></li>
-        <li><Link to="/user/following"> Obserwowane</Link></li>
-        <li><Link to="/user/events"> Wydarzenia</Link></li>
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 space-y-3">
+      <h3 className="font-bold text-lg text-gray-900 dark:text-gray-100">Mój profil</h3>
+      <ul className="space-y-2">
+        <li><Link to="/user" className="text-blue-600 dark:text-blue-400">Oś czasu</Link></li>
+        <li><Link to="/user/settings" className="text-blue-600 dark:text-blue-400">Edytuj profil</Link></li>
+        <li><Link to="/user/vehicles" className="text-blue-600 dark:text-blue-400">Moje pojazdy</Link></li>
+        <li><Link to="/user/ads" className="text-blue-600 dark:text-blue-400">Moje ogłoszenia</Link></li>
+        <li><Link to="/user/following" className="text-blue-600 dark:text-blue-400">Obserwowane</Link></li>
+        <li><Link to="/user/events" className="text-blue-600 dark:text-blue-400">Wydarzenia</Link></li>
       </ul>
     </div>
   );

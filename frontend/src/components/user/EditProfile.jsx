@@ -76,7 +76,7 @@ const EditProfile = () => {
 
   return (
     <Layout leftSidebar={<UserSidebar />} rightSidebar={<RightSidebar />}>
-    <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-lg p-6">
+    <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-lg rounded-lg p-6">
       <h1 className="text-2xl font-bold mb-4">Twój profil</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -85,7 +85,7 @@ const EditProfile = () => {
             type="email"
             value={formData.email}
             disabled
-            className="w-full border rounded p-2 bg-gray-100"
+            className="w-full border rounded p-2 bg-gray-100 dark:bg-gray-700 dark:text-gray-300"
           />
         </div>
 
@@ -95,7 +95,7 @@ const EditProfile = () => {
             type="text"
             value={formData.role}
             disabled
-            className="w-full border rounded p-2 bg-gray-100"
+            className="w-full border rounded p-2 bg-gray-100 dark:bg-gray-700 dark:text-gray-300"
           />
         </div>
 
@@ -106,7 +106,7 @@ const EditProfile = () => {
             name="username"
             value={formData.username}
             onChange={handleChange}
-            className="w-full border rounded p-2"
+            className="w-full border rounded p-2 dark:bg-gray-700 dark:text-gray-100"
           />
         </div>
 
@@ -116,7 +116,7 @@ const EditProfile = () => {
             name="bio"
             value={formData.bio}
             onChange={handleChange}
-            className="w-full border rounded p-2"
+            className="w-full border rounded p-2 dark:bg-gray-700 dark:text-gray-100"
           />
         </div>
 
@@ -127,7 +127,7 @@ const EditProfile = () => {
             name="profilePicture"
             value={formData.profilePicture}
             onChange={handleChange}
-            className="w-full border rounded p-2"
+            className="w-full border rounded p-2 dark:bg-gray-700 dark:text-gray-100"
           />
         </div>
 
@@ -153,7 +153,7 @@ const EditProfile = () => {
           Zapisz zmiany
         </button>
       </form>
-      <hr className="my-6" />
+      <hr className="my-6 border-gray-300 dark:border-gray-600" />
 <h2 className="text-xl font-semibold mb-2">Zmiana hasła</h2>
 <form
   onSubmit={async (e) => {
@@ -204,15 +204,15 @@ const EditProfile = () => {
 >
   <div>
     <label className="block font-semibold">Stare hasło</label>
-    <input type="password" name="oldPassword" className="w-full border rounded p-2" />
+    <input type="password" name="oldPassword" className="w-full border rounded p-2 dark:bg-gray-700 dark:text-gray-100" />
   </div>
   <div>
     <label className="block font-semibold">Nowe hasło</label>
-    <input type="password" name="newPassword" className="w-full border rounded p-2" />
+    <input type="password" name="newPassword" className="w-full border rounded p-2 dark:bg-gray-700 dark:text-gray-100" />
   </div>
   <div>
     <label className="block font-semibold">Powtórz nowe hasło</label>
-    <input type="password" name="confirmPassword" className="w-full border rounded p-2" />
+    <input type="password" name="confirmPassword" className="w-full border rounded p-2 dark:bg-gray-700 dark:text-gray-100" />
   </div>
   <button type="submit" className="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700">
     Zmień hasło

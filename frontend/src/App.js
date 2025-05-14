@@ -5,7 +5,6 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
 import AdminPanel from './components/AdminPanel';
-import Navbar from './components/Navbar';
 
 // Nowe komponenty do sekcji użytkownika
 import UserProfile from './components/user/UserProfile';
@@ -35,7 +34,6 @@ function App() {
 
   return (
     <Router>
-      <Navbar />
       <Routes>
         {/* Domyślna ścieżka – przekierowanie */}
         <Route

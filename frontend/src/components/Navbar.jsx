@@ -1,28 +1,44 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ({theme, setTheme }) => {
   const navigate = useNavigate();
   const username = localStorage.getItem('username');
-  const role = localStorage.getItem('role'); // Dodane
+  const role = localStorage.getItem('role');
+
+  const isDark = theme === 'dark';
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
-    localStorage.removeItem('role'); // Dodane
+    localStorage.removeItem('role');
     navigate('/login');
   };
 
+  const toggleDarkMode = () => {
+    const newTheme = isDark ? 'light' : 'dark';
+    document.documentElement.classList.toggle('dark', newTheme === 'dark');
+    localStorage.setItem('theme', newTheme);
+    setTheme(newTheme);
+  };
+
   return (
-    <nav className="bg-white shadow p-4 flex justify-between items-center">
-      <div className="text-xl font-semibold text-gray-800">
+    <nav className="bg-white dark:bg-gray-800 shadow p-4 flex justify-between items-center">
+      <div className="text-xl font-semibold text-gray-800 dark:text-white">
         <Link to="/dashboard">GazDoDechy</Link>
       </div>
 
       <div className="flex items-center gap-4">
+        <button
+          onClick={toggleDarkMode}
+          className="text-sm bg-gray-200 dark:bg-gray-700 dark:text-white px-3 py-1 rounded hover:bg-gray-300 dark:hover:bg-gray-600"
+        >
+          {isDark ? '☀ Jasny' : '🌙 Ciemny'}
+        </button>
+
         {username ? (
           <>
-            <span className="text-gray-600">
+            <span className="text-gray-600 dark:text-gray-200">
               Zalogowany jako: <strong>{username}</strong>
             </span>
 
@@ -31,7 +47,7 @@ const Navbar = () => {
             </Link>
 
             {role === 'admin' && (
-              <Link to="/admin" className="text-sm text-red-600 hover:underline">
+              <Link to="/admin" className="text-sm text-red-500 hover:underline">
                 Panel administratora
               </Link>
             )}

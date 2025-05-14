@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Layout from './Layout';
 
 const AdminPanel = () => {
   const [users, setUsers] = useState([]);
@@ -53,50 +54,55 @@ const AdminPanel = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto mt-10 bg-white shadow rounded p-6">
-      <h1 className="text-2xl font-bold text-red-600 mb-6">Panel administratora</h1>
+    <Layout leftSidebar={null} rightSidebar={null}>
+    <div className="max-w-5xl mx-auto mt-10 bg-white dark:bg-gray-900 shadow rounded p-6">
+      <h1 className="text-2xl font-bold text-red-600 dark:text-red-400 mb-6">
+        Panel administratora
+      </h1>
 
-      <table className="min-w-full table-auto border border-gray-300">
+      <table className="min-w-full table-auto border border-gray-300 dark:border-gray-700">
         <thead>
-          <tr className="bg-gray-200">
-            <th className="p-2 border">Email</th>
-            <th className="p-2 border">Nazwa użytkownika</th>
-            <th className="p-2 border">Rola</th>
-            <th className="p-2 border">Zablokowany</th>
-            <th className="p-2 border">Akcje</th>
+          <tr className="bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-100">
+            <th className="p-2 border dark:border-gray-700">Email</th>
+            <th className="p-2 border dark:border-gray-700">Nazwa użytkownika</th>
+            <th className="p-2 border dark:border-gray-700">Rola</th>
+            <th className="p-2 border dark:border-gray-700">Zablokowany</th>
+            <th className="p-2 border dark:border-gray-700">Akcje</th>
           </tr>
         </thead>
         <tbody>
           {users.map((user) => (
-            <tr key={user.id} className="text-center">
-              <td className="p-2 border">{user.email}</td>
-              <td className="p-2 border">{user.username}</td>
-              <td className="p-2 border">{user.role}</td>
-              <td className="p-2 border">{user.isBlocked ? 'Tak' : 'Nie'}</td>
-              <td className="p-2 border space-x-2">
+            <tr key={user.id} className="text-center text-gray-900 dark:text-gray-100">
+              <td className="p-2 border dark:border-gray-700">{user.email}</td>
+              <td className="p-2 border dark:border-gray-700">{user.username}</td>
+              <td className="p-2 border dark:border-gray-700">{user.role}</td>
+              <td className="p-2 border dark:border-gray-700">
+                {user.isBlocked ? 'Tak' : 'Nie'}
+              </td>
+              <td className="p-2 border dark:border-gray-700 space-x-2">
                 <button
                   onClick={() => handleBlock(user.id)}
-                  className="bg-red-500 text-white px-2 py-1 rounded"
+                  className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded"
                 >
                   Zablokuj
                 </button>
                 <button
                   onClick={() => handleUnblock(user.id)}
-                  className="bg-green-500 text-white px-2 py-1 rounded"
+                  className="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded"
                 >
                   Odblokuj
                 </button>
                 {user.role === 'admin' ? (
                   <button
                     onClick={() => handleRoleChange(user.id, 'user')}
-                    className="bg-yellow-500 text-white px-2 py-1 rounded"
+                    className="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded"
                   >
                     Odbierz admina
                   </button>
                 ) : (
                   <button
                     onClick={() => handleRoleChange(user.id, 'admin')}
-                    className="bg-blue-500 text-white px-2 py-1 rounded"
+                    className="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded"
                   >
                     Nadaj admina
                   </button>
@@ -107,7 +113,9 @@ const AdminPanel = () => {
         </tbody>
       </table>
     </div>
+    </Layout>
   );
 };
+
 
 export default AdminPanel;
