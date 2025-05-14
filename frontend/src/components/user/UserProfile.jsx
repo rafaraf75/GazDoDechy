@@ -45,11 +45,17 @@ const UserProfile = () => {
     <Layout leftSidebar={<UserSidebar />} rightSidebar={<RightSidebar />}>
       <div className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg shadow p-4">
         <div className="flex items-center space-x-4">
-          <img
-            src={profilePicture || 'https://i.pravatar.cc/150?u=default'}
-            alt="avatar"
-            className="w-20 h-20 rounded-full"
-          />
+          {profilePicture ? (
+            <img
+              src={profilePicture}
+              alt="avatar"
+              className="w-20 h-20 rounded-full object-cover"
+            />
+          ) : (
+            <div className="w-20 h-20 rounded-full bg-gray-300 dark:bg-gray-700 flex items-center justify-center text-white text-xl font-bold">
+              ?
+            </div>
+          )}
           <div>
             <h2 className="text-xl font-bold">{username}</h2>
             <p className="text-gray-600 dark:text-gray-300">{bio || 'Opis profilu'}</p>
@@ -64,5 +70,4 @@ const UserProfile = () => {
     </Layout>
   );
 };
-
 export default UserProfile;
