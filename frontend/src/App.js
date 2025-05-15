@@ -20,6 +20,7 @@ import Events from './components/sections/Events';
 import Groups from './components/sections/Groups';
 import LiveHelp from './components/sections/LiveHelp';
 import MarketDetails from './components/sections/market/MarketDetails';
+import MarketAdd from './components/sections/market/MarketAdd';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -57,6 +58,7 @@ function App() {
         <Route path="/user/events" element={<UserEvents />} />
 
         <Route path="/market" element={<Market />} />
+        <Route path="/market/add" element={<MarketAdd />} />
         <Route path="/market/:id" element={<MarketDetails />} />
         <Route path="/tips" element={<Tips />} />
         <Route path="/events" element={<Events />} />
