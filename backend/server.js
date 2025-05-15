@@ -1,6 +1,9 @@
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const userStatusRoutes = require('./routes/userStatus');
+const adsRoutes = require('./routes/ads');
+const categoriesRoutes = require('./routes/categories');
+const partTypesRoutes = require('./routes/partTypes');
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config(); // wczytuje zmienne z .env
@@ -20,6 +23,9 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/user-status', userStatusRoutes);
+app.use('/api/ads', adsRoutes);
+app.use('/api/categories', categoriesRoutes);
+app.use('/api/part-types', partTypesRoutes);
 
 // Start serwera
 const PORT = process.env.PORT || 5000;
