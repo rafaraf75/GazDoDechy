@@ -1,4 +1,5 @@
 const { supabaseAdmin } = require('../supabaseClient');
+const cloudinary = require('../config/cloudinaryConfig');
 
 // GET /api/users
 exports.getAllUsers = async (req, res) => {
@@ -84,23 +85,60 @@ exports.getUserById = async (req, res) => {
 // PUT /api/users/:id
 exports.updateUserById = async (req, res) => {
   const { id } = req.params;
-  const { username, bio, profilePicture } = req.body;
+  const { username, bio, profilePicture, avatarPublicId } = req.body;
 
   try {
-    const { error } = await supabaseAdmin
+    // Pobierz stare dane
+    const { data: oldUser, error: fetchError } = await supabaseAdmin
       .from('users')
-      .update({ username, bio, profilePicture })
-      .eq('id', id);
+      .select('profilePicture, avatarPublicId')
+      .eq('id', id)
+      .single();
 
-    if (error) {
-      console.error(error);
-      return res.status(500).json({ message: 'Błąd aktualizacji profilu' });
+    if (fetchError) {
+      console.error(fetchError);
+      return res.status(500).json({ message: 'Błąd pobierania starego zdjęcia' });
+    }
+
+    // Jeśli podano nowe zdjęcie
+    if (profilePicture && profilePicture !== oldUser.profilePicture) {
+      // Usuń stare z Cloudinary
+      if (oldUser.avatarPublicId) {
+        await cloudinary.uploader.destroy(oldUser.avatarPublicId);
+      }
+
+      // Zapisz nowe
+      const { error: updateError } = await supabaseAdmin
+        .from('users')
+        .update({
+          username,
+          bio,
+          profilePicture,
+          avatarPublicId
+        })
+        .eq('id', id);
+
+      if (updateError) {
+        console.error(updateError);
+        return res.status(500).json({ message: 'Błąd aktualizacji profilu' });
+      }
+    } else {
+      // Nie zmieniono zdjęcia – tylko username i bio
+      const { error: updateError } = await supabaseAdmin
+        .from('users')
+        .update({ username, bio })
+        .eq('id', id);
+
+      if (updateError) {
+        console.error(updateError);
+        return res.status(500).json({ message: 'Błąd aktualizacji profilu' });
+      }
     }
 
     res.status(200).json({ message: 'Profil zaktualizowany' });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Błąd serwera przy aktualizacji' });
+    res.status(500).json({ message: 'Błąd serwera' });
   }
 };
 
