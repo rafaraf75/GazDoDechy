@@ -13,6 +13,7 @@ const EditProfile = () => {
     profilePicture: '',
   });
 
+  const [selectedFile, setSelectedFile] = useState(null);
   const userId = localStorage.getItem('userId');
 
   useEffect(() => {
@@ -20,10 +21,9 @@ const EditProfile = () => {
       try {
         const res = await axios.get(`http://localhost:5000/api/users/${userId}`);
         const data = res.data;
-
         setFormData({
           ...data,
-          profilePicture: !data.profilePicture || data.profilePicture === 'null' ? '' : data.profilePicture
+          profilePicture: !data.profilePicture || data.profilePicture === 'null' ? '' : data.profilePicture,
         });
       } catch (err) {
         console.error('Błąd pobierania danych:', err);
@@ -37,12 +37,32 @@ const EditProfile = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleImageUpload = async () => {
+    if (!selectedFile) return null;
+
+    const formData = new FormData();
+    formData.append('plik', selectedFile);
+    formData.append('folder', 'users/avatars');
+
+    try {
+      const res = await axios.post('http://localhost:5000/api/images/upload', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      return {
+        url: res.data.url,
+        publicId: res.data.public_id,
+      };
+    } catch (err) {
+      console.error('Błąd wysyłania zdjęcia profilowego:', err);
+      return null;
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const trimmedUsername = formData.username.trim();
     const trimmedBio = formData.bio.trim();
-    const trimmedUrl = formData.profilePicture.trim();
 
     if (!trimmedUsername) {
       alert('Nazwa użytkownika nie może być pusta.');
@@ -54,19 +74,16 @@ const EditProfile = () => {
       return;
     }
 
-    if (
-      trimmedUrl !== '' &&
-      !/^https?:\/\/[\w-]+(\.[\w-]+)+[/#?]?.*$/.test(trimmedUrl)
-    ) {
-      alert('URL zdjęcia profilowego musi być poprawnym adresem.');
-      return;
-    }
+    const uploaded = await handleImageUpload();
+    const profilePictureUrl = uploaded ? uploaded.url : formData.profilePicture;
+    const avatarPublicId = uploaded ? uploaded.publicId : undefined;
 
     try {
       await axios.put(`http://localhost:5000/api/users/${userId}`, {
         username: trimmedUsername,
         bio: trimmedBio,
-        profilePicture: trimmedUrl,
+        profilePicture: profilePictureUrl,
+        avatarPublicId,
       });
       alert('Profil zaktualizowany!');
     } catch (err) {
@@ -121,13 +138,12 @@ const EditProfile = () => {
         </div>
 
         <div>
-          <label className="block font-semibold">URL zdjęcia profilowego</label>
+          <label className="block font-semibold">Zdjecie profilowe</label>
           <input
-            type="text"
-            name="profilePicture"
-            value={formData.profilePicture}
-            onChange={handleChange}
-            className="w-full border rounded p-2 dark:bg-gray-700 dark:text-gray-100"
+            type="file"
+            accept="image/*"
+              onChange={(e) => setSelectedFile(e.target.files[0])}
+              className="dark:text-white"
           />
         </div>
 
