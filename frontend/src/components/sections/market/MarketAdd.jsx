@@ -53,16 +53,16 @@ const MarketAdd = () => {
     if (!imageFile) return null;
 
     const formData = new FormData();
-    formData.append('file', imageFile);
-    formData.append('upload_preset', 'YOUR_UPLOAD_PRESET'); // zmień
-    formData.append('cloud_name', 'YOUR_CLOUD_NAME');       // zmień
+    formData.append('plik', imageFile);
+    formData.append('folder', 'ads');
 
     try {
-      const res = await axios.post(
-        'https://api.cloudinary.com/v1_1/YOUR_CLOUD_NAME/image/upload',
-        formData
-      );
-      return res.data.secure_url;
+          const res = await axios.post('http://localhost:5000/api/images/upload', formData, {
+          headers: {
+        'Content-Type': 'multipart/form-data'
+        },
+      });
+      return res.data.url;
     } catch (err) {
       console.error('Błąd wysyłania zdjęcia:', err);
       return null;
