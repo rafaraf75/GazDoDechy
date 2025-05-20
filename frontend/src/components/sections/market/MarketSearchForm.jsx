@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const MarketSearchForm = ({ selectedCategory }) => {
+const MarketSearchForm = ({ selectedCategory, onSearch }) => {
+  const [brand, setBrand] = useState('');
+  const [model, setModel] = useState('');
+  const [year, setYear] = useState('');
+  const [priceMax, setPriceMax] = useState('');
+  const [partTypeId, setPartTypeId] = useState('');
+  const [title, setTitle] = useState('');
   const [partTypes, setPartTypes] = useState([]);
 
   useEffect(() => {
@@ -12,36 +18,65 @@ const MarketSearchForm = ({ selectedCategory }) => {
     }
   }, [selectedCategory]);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const filters = {
+      category: selectedCategory,
+      brand,
+      model,
+      year,
+      priceMax,
+      part_type_id: partTypeId,
+      title
+    };
+
+    // usunięcie pustych wartości
+    Object.keys(filters).forEach(key => {
+      if (!filters[key]) delete filters[key];
+    });
+
+    onSearch(filters);
+  };
+
   return (
-    <form className="flex flex-wrap gap-4 mb-4 items-center">
-      {/* Marka i model */}
+    <form
+      className="flex flex-wrap gap-4 mb-4 items-center"
+      onSubmit={handleSubmit}
+    >
       {(selectedCategory === 'Samochody' || selectedCategory === 'Motocykle' || selectedCategory === 'Części') && (
         <>
           <input
             type="text"
             placeholder="Marka"
+            value={brand}
+            onChange={(e) => setBrand(e.target.value)}
             className="flex-1 min-w-[150px] p-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
           />
           <input
             type="text"
             placeholder="Model"
+            value={model}
+            onChange={(e) => setModel(e.target.value)}
             className="flex-1 min-w-[150px] p-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
           />
         </>
       )}
 
-      {/* Rok produkcji tylko dla samochodów i motocykli */}
       {(selectedCategory === 'Samochody' || selectedCategory === 'Motocykle') && (
         <input
           type="number"
           placeholder="Rok"
+          value={year}
+          onChange={(e) => setYear(e.target.value)}
           className="w-[100px] p-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
         />
       )}
 
-      {/* Typ części tylko dla części */}
       {selectedCategory === 'Części' && (
         <select
+          value={partTypeId}
+          onChange={(e) => setPartTypeId(e.target.value)}
           className="flex-1 min-w-[180px] p-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
         >
           <option value="">-- Wybierz typ części --</option>
@@ -51,23 +86,24 @@ const MarketSearchForm = ({ selectedCategory }) => {
         </select>
       )}
 
-      {/* Tytuł tylko dla narzędzi */}
       {selectedCategory === 'Narzędzia' && (
         <input
           type="text"
           placeholder="Tytuł / słowo kluczowe"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
           className="flex-1 min-w-[200px] p-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
         />
       )}
 
-      {/* Cena max – dostępna dla wszystkich */}
       <input
         type="number"
         placeholder="Cena max"
+        value={priceMax}
+        onChange={(e) => setPriceMax(e.target.value)}
         className="w-[120px] p-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
       />
 
-      {/* Szukaj – ostatni przycisk */}
       <button
         type="submit"
         className="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded dark:bg-green-700 dark:hover:bg-green-800"
