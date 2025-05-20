@@ -7,7 +7,8 @@ const MarketAdd = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [categoryId, setCategoryId] = useState('');
-  const [imageFile, setImageFile] = useState(null);
+  const [imageFiles, setImageFiles] = useState([]); // wiele zdjęć
+  const [previewUrls, setPreviewUrls] = useState([]); // podglądy
   const [price, setPrice] = useState('');
   const [year, setYear] = useState('');
   const [mileage, setMileage] = useState('');
@@ -49,67 +50,93 @@ const MarketAdd = () => {
     setSelectedCategoryName(selectedCategory?.name || '');
   };
 
+  // Usuwanie jednego zdjęcia z podglądu i listy plików
+  const handleRemoveImage = (index) => {
+    const updatedFiles = [...imageFiles];
+    const updatedPreviews = [...previewUrls];
+    updatedFiles.splice(index, 1);
+    updatedPreviews.splice(index, 1);
+    setImageFiles(updatedFiles);
+    setPreviewUrls(updatedPreviews);
+  };
+
+  // uploaduje każde zdjęcie osobno do Cloudinary
   const handleImageUpload = async () => {
-    if (!imageFile) return null;
+    const uploaded = [];
 
-    const formData = new FormData();
-    formData.append('plik', imageFile);
-    formData.append('folder', 'ads');
+    for (const file of imageFiles) {
+      const formData = new FormData();
+      formData.append('plik', file);
+      formData.append('folder', 'ads');
 
-    try {
-          const res = await axios.post('http://localhost:5000/api/images/upload', formData, {
+      try {
+        const res = await axios.post('http://localhost:5000/api/images/upload', formData, {
           headers: {
-        'Content-Type': 'multipart/form-data'
-        },
-      });
-      return res.data.url;
-    } catch (err) {
-      console.error('Błąd wysyłania zdjęcia:', err);
-      return null;
-    }
-  };
+            'Content-Type': 'multipart/form-data'
+          }
+        });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const userId = localStorage.getItem('userId');
-    if (!userId) return alert('Brak ID użytkownika');
-
-    const imageUrl = await handleImageUpload();
-
-    try {
-      const res = await axios.post('http://localhost:5000/api/ads', {
-        title,
-        description,
-        category_id: categoryId,
-        image_url: imageUrl,
-        user_id: userId,
-        price: Number(price),
-        year: year ? Number(year) : null,
-        mileage: mileage ? Number(mileage) : null,
-        brand,
-        model,
-        part_type_id: partTypeId || null,
-      });
-
-      if (res.status === 201) {
-        alert('Ogłoszenie dodane!');
-        // Reset
-        setTitle('');
-        setDescription('');
-        setCategoryId('');
-        setImageFile(null);
-        setPrice('');
-        setYear('');
-        setMileage('');
-        setBrand('');
-        setModel('');
-        setPartTypeId('');
+        uploaded.push({
+          secure_url: res.data.url,
+          public_id: res.data.public_id
+        });
+      } catch (err) {
+        console.error('Błąd wysyłania zdjęcia:', err);
       }
-    } catch (err) {
-      console.error('Błąd dodawania ogłoszenia:', err);
-      alert('Wystąpił błąd przy dodawaniu ogłoszenia.');
     }
+
+    return uploaded;
   };
+
+  // --- ZAMIENIAMY CAŁE handleSubmit ---
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  const userId = localStorage.getItem('userId');
+  if (!userId) return alert('Brak ID użytkownika');
+
+  const imageData = await handleImageUpload();
+  const secureUrls = imageData.map(d => d.secure_url);
+  const publicIds = imageData.map(d => d.public_id);
+
+  const payload = {
+    title,
+    description,
+    category_id: categoryId,
+    image_url: secureUrls[0] || null,
+    image_urls: JSON.stringify(secureUrls),
+    image_public_id: publicIds[0] || null,
+    image_public_ids: JSON.stringify(publicIds),
+    user_id: userId,
+    price: Number(price),
+    year: year ? Number(year) : null,
+    mileage: mileage ? Number(mileage) : null,
+    brand,
+    model,
+    part_type_id: partTypeId || null,
+  };
+
+  try {
+    const res = await axios.post('http://localhost:5000/api/ads', payload);
+
+    if (res.status === 201) {
+      alert('Ogłoszenie dodane!');
+      setTitle('');
+      setDescription('');
+      setCategoryId('');
+      setImageFiles([]);
+      setPreviewUrls([]);
+      setPrice('');
+      setYear('');
+      setMileage('');
+      setBrand('');
+      setModel('');
+      setPartTypeId('');
+    }
+  } catch (err) {
+    console.error('Błąd dodawania ogłoszenia:', err);
+    alert('Wystąpił błąd przy dodawaniu ogłoszenia.');
+  }
+};
 
   return (
     <Layout leftSidebar={<DashboardSidebar />}>
@@ -212,12 +239,41 @@ const MarketAdd = () => {
             />
           )}
 
+          {/* input z możliwością wyboru wielu plików */}
           <input
             type="file"
             accept="image/*"
-            onChange={(e) => setImageFile(e.target.files[0])}
+            multiple
+            onChange={(e) => {
+              const newFiles = Array.from(e.target.files);
+              const allFiles = [...imageFiles, ...newFiles].slice(0, 3); // maks. 3
+              setImageFiles(allFiles);
+              setPreviewUrls(allFiles.map(file => URL.createObjectURL(file)));
+            }}
             className="dark:text-white"
           />
+
+          {/* podgląd wielu zdjęć */}
+          {previewUrls.length > 0 && (
+            <div className="mt-4">
+              <p className="text-sm dark:text-white mb-1">Podgląd zdjęć (max 3):</p>
+              <div className="flex gap-4 flex-wrap">
+                {previewUrls.map((url, idx) => (
+                  <div key={idx} className="relative w-32">
+                    <img src={url} alt={`Podgląd ${idx + 1}`} className="w-full border rounded shadow" />
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveImage(idx)}
+                      className="absolute top-0 right-0 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center shadow"
+                      title="Usuń zdjęcie"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           <button
             type="submit"
