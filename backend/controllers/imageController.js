@@ -1,5 +1,6 @@
 const cloudinary = require('../config/cloudinaryConfig');
 const { v4: uuidv4 } = require('uuid');
+const path = require('path');
 
 // Cloudinary potrzebuje danych w formacie base64 lub bufora
 exports.uploadImage = async (req, res) => {
@@ -10,12 +11,13 @@ exports.uploadImage = async (req, res) => {
       return res.status(400).json({ message: 'Brak pliku' });
     }
 
-    // Generuj nazwę unikalną
-    const fileName = `${uuidv4()}-${file.originalname}`;
+    const baseName = path.basename(file.originalname, path.extname(file.originalname));
+    const fileName = `${uuidv4()}-${baseName}`;
 
-    // W zależności od typu — wybierz folder
+    // Wybierz folder (np. "ads")
     const folder = req.body.folder || 'ads';
 
+    // Upload do Cloudinary z użyciem streamu
     const result = await new Promise((resolve, reject) => {
       const stream = cloudinary.uploader.upload_stream(
         {
@@ -32,6 +34,7 @@ exports.uploadImage = async (req, res) => {
       stream.end(file.buffer);
     });
 
+    // Zwróć dane o zdjęciu
     return res.status(200).json({
       message: 'Plik zapisany w Cloudinary',
       url: result.secure_url,
