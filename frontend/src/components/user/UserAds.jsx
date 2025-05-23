@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Layout from '../Layout';
 import UserSidebar from './UserSidebar';
 import RightSidebar from '../RightSidebar';
@@ -6,6 +7,7 @@ import axios from 'axios';
 
 const UserAds = () => {
   const [ads, setAds] = useState([]);
+  const navigate = useNavigate();
   const userId = localStorage.getItem('userId');
 
   useEffect(() => {
@@ -60,7 +62,8 @@ const UserAds = () => {
                     Usuń
                   </button>
                   <button
-                    onClick={() => alert('TODO: Edycja')}
+                    onClick={() => navigate(`/market/edit/${ad.id}`)}
+
                     className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
                   >
                     Edytuj
