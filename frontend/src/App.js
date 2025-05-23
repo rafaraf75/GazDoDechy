@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { SocketProvider } from './context/SocketContext';
+
 
 import Login from './components/Login';
 import Register from './components/Register';
@@ -21,6 +23,7 @@ import Groups from './components/sections/Groups';
 import LiveHelp from './components/sections/LiveHelp';
 import MarketDetails from './components/sections/market/MarketDetails';
 import MarketAdd from './components/sections/market/MarketAdd';
+import MarketEdit from './components/sections/market/MarketEdit';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -35,6 +38,7 @@ function App() {
   }, []);
 
   return (
+    <SocketProvider>
     <Router>
       <Routes>
         {/* Domyślna ścieżka – przekierowanie */}
@@ -60,6 +64,7 @@ function App() {
         <Route path="/market" element={<Market />} />
         <Route path="/market/add" element={<MarketAdd />} />
         <Route path="/market/:id" element={<MarketDetails />} />
+        <Route path="/market/edit/:id" element={<MarketEdit />} />
         <Route path="/tips" element={<Tips />} />
         <Route path="/events" element={<Events />} />
         <Route path="/groups" element={<Groups />} />
@@ -90,6 +95,7 @@ function App() {
         />
       </Routes>
     </Router>
+    </SocketProvider>
   );
 }
 
