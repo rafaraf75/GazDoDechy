@@ -51,7 +51,7 @@ const RightSidebar = () => {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+    <div className="bg-white dark:bg-gray-800 shadow p-4 space-y-3 rounded-b-lg">
       <h2 className="font-semibold text-lg text-gray-900 dark:text-gray-100">Czat / Znajomi</h2>
       <ul className="text-sm text-gray-700 dark:text-gray-300 space-y-1">
         {users.map((user) => (

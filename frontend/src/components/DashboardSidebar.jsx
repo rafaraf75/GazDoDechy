@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const DashboardSidebar = () => (
-  <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 space-y-3">
+  <div className="bg-white dark:bg-gray-800 shadow p-4 space-y-3 rounded-b-lg">
     <h3 className="font-bold text-lg text-gray-900 dark:text-gray-100">Menu</h3>
     <ul className="space-y-2">
       <li><Link to="/market" className="text-blue-600 dark:text-blue-400">Autogiełda</Link></li>

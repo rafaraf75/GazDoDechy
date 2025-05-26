@@ -10,24 +10,28 @@ const Layout = ({ children, leftSidebar = null, rightSidebar = null }) => {
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-      <Navbar theme={theme} setTheme={setTheme} />
+      {/* Sticky Navbar */}
+      <div className="sticky top-0 z-50">
+        <Navbar theme={theme} setTheme={setTheme} />
+      </div>
 
-      <div className="w-full grid grid-cols-1 md:grid-cols-4 gap-6 px-4 mt-6">
+      {/* Grid z marginesem odpowiadającym wysokości navbaru */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 px-4">
         {/* Lewy sidebar */}
         {leftSidebar && (
-          <aside className="col-span-1 hidden md:block">
+          <aside className="col-span-1 hidden md:block sticky top-[72px] h-[calc(100vh-72px)]">
             {leftSidebar}
           </aside>
         )}
 
         {/* Główna treść */}
-        <main className={leftSidebar && rightSidebar ? "col-span-2" : "col-span-3"}>
+        <main className={`${leftSidebar && rightSidebar ? "col-span-2" : "col-span-3"} pt-6`}>
           {children}
         </main>
 
-        {/* Prawy sidebar – czat */}
+        {/* Prawy sidebar */}
         {rightSidebar && (
-          <aside className="col-span-1 hidden md:block">
+          <aside className="col-span-1 hidden md:block sticky top-[72px] h-[calc(100vh-72px)]">
             {rightSidebar}
           </aside>
         )}
