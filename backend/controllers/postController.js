@@ -62,16 +62,30 @@ exports.getAllPosts = async (req, res) => {
       .from('posts')
       .select(`
         *,
-        users: user_id (username, profilePicture),
-        post_images (url)
+        users:user_id (username, profilePicture),
+        post_images (url),
+        comments (
+          id
+        )
       `)
       .order('created_at', { ascending: false });
 
     if (error) throw error;
 
-    res.json(data);
+    // Dodaj count komentarzy
+    const postsWithCommentCount = data.map(post => ({
+      ...post,
+      comment_count: post.comments?.length || 0,
+    }));
+
+    // Usuń pełne dane `comments` (nie są nam tu potrzebne)
+    postsWithCommentCount.forEach(p => delete p.comments);
+
+    res.json(postsWithCommentCount);
   } catch (err) {
     console.error('Błąd pobierania postów:', err);
     res.status(500).json({ message: 'Błąd serwera' });
   }
 };
+
+

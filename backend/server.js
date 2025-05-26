@@ -7,6 +7,8 @@ const partTypesRoutes = require('./routes/partTypes');
 const imageRoutes = require('./routes/image');
 const chatRoutes = require('./routes/chat');
 const postRoutes = require('./routes/post');
+const commentRoutes = require('./routes/comments');
+const reactionRoutes = require('./routes/reactions');
 const express = require('express');
 const cors = require('cors');
 const http = require('http');
@@ -69,6 +71,8 @@ app.use('/api/part-types', partTypesRoutes);
 app.use('/api/images', imageRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/posts', postRoutes);
+app.use('/api/comments', commentRoutes);
+app.use('/api/reactions', reactionRoutes);
 
 // Start serwera
 const PORT = process.env.PORT || 5000;
