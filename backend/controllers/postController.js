@@ -88,4 +88,124 @@ exports.getAllPosts = async (req, res) => {
   }
 };
 
+// GET /api/posts/:id
+exports.getPostById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const { data, error } = await supabaseAdmin
+      .from('posts')
+      .select(`
+        *,
+        post_images (url, public_id)
+      `)
+      .eq('id', id)
+      .single();
+
+    if (error || !data) {
+      return res.status(404).json({ message: 'Nie znaleziono posta' });
+    }
+
+    res.json(data);
+  } catch (err) {
+    console.error('Błąd pobierania posta:', err);
+    res.status(500).json({ message: 'Błąd serwera' });
+  }
+};
+
+// PUT /api/posts/:id
+exports.updatePost = async (req, res) => {
+  const { id } = req.params;
+  const { description, user_id } = req.body;
+
+  try {
+    if (!user_id || !description) {
+      return res.status(400).json({ message: 'Brakuje danych' });
+    }
+
+    // Sprawdź, czy post istnieje i należy do użytkownika
+    const { data: existingPost, error: findErr } = await supabaseAdmin
+      .from('posts')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (findErr || !existingPost) {
+      return res.status(404).json({ message: 'Post nie istnieje' });
+    }
+
+    if (existingPost.user_id !== user_id) {
+      return res.status(403).json({ message: 'Brak dostępu' });
+    }
+
+    const { data, error } = await supabaseAdmin
+      .from('posts')
+      .update({ description })
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) throw error;
+
+    res.json({ message: 'Post zaktualizowany', post: data });
+  } catch (err) {
+    console.error('Błąd edycji posta:', err);
+    res.status(500).json({ message: 'Błąd serwera' });
+  }
+};
+
+// DELETE /api/posts/:id
+exports.deletePost = async (req, res) => {
+  const { id } = req.params;
+  const { user_id } = req.body;
+
+  try {
+    // Sprawdź właściciela
+    const { data: existingPost, error: findErr } = await supabaseAdmin
+      .from('posts')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (findErr || !existingPost) {
+      return res.status(404).json({ message: 'Post nie istnieje' });
+    }
+
+    if (existingPost.user_id !== user_id) {
+      return res.status(403).json({ message: 'Brak dostępu' });
+    }
+
+    // Usuń zdjęcia z Cloudinary
+    const { data: images } = await supabaseAdmin
+      .from('post_images')
+      .select('public_id')
+      .eq('post_id', id);
+
+    if (images && images.length > 0) {
+      await Promise.all(images.map(img =>
+        cloudinary.uploader.destroy(img.public_id)
+      ));
+    }
+
+    // Usuń rekordy z `post_images`
+    await supabaseAdmin
+      .from('post_images')
+      .delete()
+      .eq('post_id', id);
+
+    // Usuń post
+    const { error: deleteErr } = await supabaseAdmin
+      .from('posts')
+      .delete()
+      .eq('id', id);
+
+    if (deleteErr) throw deleteErr;
+
+    res.json({ message: 'Post usunięty' });
+  } catch (err) {
+    console.error('Błąd usuwania posta:', err);
+    res.status(500).json({ message: 'Błąd serwera' });
+  }
+};
+
 
