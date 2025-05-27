@@ -3,12 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '../Layout';
 import UserSidebar from './UserSidebar';
 import RightSidebar from '../RightSidebar';
+import Post from '../post/Post';
 import axios from 'axios';
 
 const UserProfile = () => {
   const [username, setUsername] = useState('');
   const [bio, setBio] = useState('');
   const [profilePicture, setProfilePicture] = useState('');
+  const [userPosts, setUserPosts] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,9 +25,7 @@ const UserProfile = () => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/api/users/${userId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         });
 
         const { username, bio, profilePicture } = response.data;
@@ -38,11 +38,42 @@ const UserProfile = () => {
       }
     };
 
+    const fetchUserPosts = async () => {
+      try {
+        const { data } = await axios.get('http://localhost:5000/api/posts');
+        const userPostsOnly = data.filter(post => post.user_id === userId);
+        setUserPosts(userPostsOnly);
+      } catch (err) {
+        console.error('Błąd pobierania postów użytkownika:', err);
+      }
+    };
+
     fetchUserData();
+    fetchUserPosts();
   }, [navigate]);
+
+  const handleEdit = (postId) => {
+    navigate(`/post/edit/${postId}`);
+  };
+
+  const handleDelete = async (postId) => {
+    const confirm = window.confirm('Czy na pewno chcesz usunąć ten post?');
+    if (!confirm) return;
+
+    try {
+      await axios.delete(`http://localhost:5000/api/posts/${postId}`, {
+        data: { user_id: localStorage.getItem('userId') }
+      });
+      setUserPosts(prev => prev.filter(p => p.id !== postId));
+    } catch (err) {
+      console.error('Błąd usuwania posta:', err);
+      alert('Wystąpił błąd przy usuwaniu posta');
+    }
+  };
 
   return (
     <Layout leftSidebar={<UserSidebar />} rightSidebar={<RightSidebar />}>
+      {/* Profil użytkownika */}
       <div className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg shadow p-4">
         <div className="flex items-center space-x-4">
           {profilePicture ? (
@@ -63,11 +94,28 @@ const UserProfile = () => {
         </div>
       </div>
 
-      <div className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg shadow p-4 mt-4">
-        <h3 className="text-lg font-semibold mb-2">Posty użytkownika</h3>
-        <p className="text-sm text-gray-500 dark:text-gray-300 italic">posty...</p>
+      {/* Posty użytkownika */}
+      <div className="mt-6 space-y-6">
+        <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+          Posty użytkownika
+        </h3>
+
+        {userPosts.length === 0 ? (
+          <p className="text-sm text-gray-500 dark:text-gray-300 italic">Brak postów.</p>
+        ) : (
+          userPosts.map((post) => (
+            <Post
+              key={post.id}
+              post={post}
+              onEdit={() => handleEdit(post.id)}
+              onDelete={() => handleDelete(post.id)}
+              showActions={true}
+            />
+          ))
+        )}
       </div>
     </Layout>
   );
 };
+
 export default UserProfile;
