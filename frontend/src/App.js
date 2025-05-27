@@ -24,6 +24,7 @@ import LiveHelp from './components/sections/LiveHelp';
 import MarketDetails from './components/sections/market/MarketDetails';
 import MarketAdd from './components/sections/market/MarketAdd';
 import MarketEdit from './components/sections/market/MarketEdit';
+import PostEdit from './components/post/PostEdit';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -69,6 +70,7 @@ function App() {
         <Route path="/events" element={<Events />} />
         <Route path="/groups" element={<Groups />} />
         <Route path="/help" element={<LiveHelp />} />
+        <Route path="/post/edit/:id" element={<PostEdit />} />
 
         {/* Panel główny (dashboard) */}
         <Route
