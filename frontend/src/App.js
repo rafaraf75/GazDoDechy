@@ -19,12 +19,13 @@ import UserEvents from './components/user/UserEvents';
 import Market from './components/sections/market/Market';
 import Tips from './components/sections/Tips';
 import Events from './components/sections/Events';
-import Groups from './components/sections/Groups';
+import Groups from './components/group/Groups';
 import LiveHelp from './components/sections/LiveHelp';
 import MarketDetails from './components/sections/market/MarketDetails';
 import MarketAdd from './components/sections/market/MarketAdd';
 import MarketEdit from './components/sections/market/MarketEdit';
 import PostEdit from './components/post/PostEdit';
+import GroupDetails from './components/group/GroupDetails';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -71,6 +72,7 @@ function App() {
         <Route path="/groups" element={<Groups />} />
         <Route path="/help" element={<LiveHelp />} />
         <Route path="/post/edit/:id" element={<PostEdit />} />
+        <Route path="/groups/:slug" element={<GroupDetails />} />
 
         {/* Panel główny (dashboard) */}
         <Route

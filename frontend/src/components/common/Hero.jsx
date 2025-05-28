@@ -21,18 +21,10 @@ const Hero = ({ slug }) => {
 
   return (
     <div
-      className="relative w-full rounded-xl overflow-hidden mb-6 shadow"
-      style={{
-        backgroundImage: `url(${heroData.image_url})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        minHeight: '220px',
-      }}
+      className="w-full rounded-xl overflow-hidden mb-6 shadow p-10 text-center bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
     >
-      <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-center text-white p-6">
-        <h1 className="text-3xl font-bold mb-2">{heroData.title}</h1>
-        <p className="text-md max-w-2xl">{heroData.description}</p>
-      </div>
+      <h1 className="text-3xl font-bold mb-2">{heroData.title}</h1>
+      <p className="text-md max-w-2xl mx-auto">{heroData.subtitle}</p>
     </div>
   );
 };
