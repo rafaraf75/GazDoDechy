@@ -5,12 +5,18 @@ import Layout from './Layout';
 const AdminPanel = () => {
   const [users, setUsers] = useState([]);
   const [heros, setHeros] = useState([]);
-  const [newHero, setNewHero] = useState({ page: '', heading: '', subheading: '' });
-  const [imageFile, setImageFile] = useState(null);
+  const [groups, setGroups] = useState([]);
+
+  const [newHero, setNewHero] = useState({ slug: '', title: '', subtitle: '' });
+  const [editingHero, setEditingHero] = useState(null);
+
+  const [newGroup, setNewGroup] = useState({ slug: '', name: '', description: '' });
+  const [editingGroup, setEditingGroup] = useState(null);
 
   useEffect(() => {
     fetchUsers();
     fetchHeros();
+    fetchGroups();
   }, []);
 
   const fetchUsers = async () => {
@@ -31,6 +37,15 @@ const AdminPanel = () => {
     }
   };
 
+  const fetchGroups = async () => {
+    try {
+      const res = await axios.get('http://localhost:5000/api/groups');
+      setGroups(res.data);
+    } catch (err) {
+      console.error('Błąd pobierania grup:', err);
+    }
+  };
+
   const handleBlock = async (id) => {
     await axios.post(`http://localhost:5000/api/user-status/block/${id}`);
     fetchUsers();
@@ -46,32 +61,46 @@ const AdminPanel = () => {
     fetchUsers();
   };
 
+  // HERO HANDLING
   const handleHeroChange = (e) => {
     const { name, value } = e.target;
     setNewHero((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleImageChange = (e) => {
-    setImageFile(e.target.files[0]);
-  };
-
   const handleAddHero = async () => {
-    const formData = new FormData();
-    formData.append('image', imageFile);
-    formData.append('page', newHero.page);
-    formData.append('heading', newHero.heading);
-    formData.append('subheading', newHero.subheading);
-
     try {
-      await axios.post('http://localhost:5000/api/hero', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
-      setNewHero({ page: '', heading: '', subheading: '' });
-      setImageFile(null);
+      await axios.post('http://localhost:5000/api/hero', newHero);
+      alert('Nowa sekcja hero została dodana.');
+      setNewHero({ slug: '', title: '', subtitle: '' });
       fetchHeros();
     } catch (err) {
       console.error('Błąd dodawania hero:', err);
     }
+  };
+
+  const handleEditHero = (hero) => {
+    setEditingHero(hero);
+    setNewHero({ slug: hero.slug, title: hero.title, subtitle: hero.subtitle });
+  };
+
+  const handleSaveEditHero = async () => {
+    try {
+      await axios.put(`http://localhost:5000/api/hero/${editingHero.id}`, {
+        title: newHero.title,
+        subtitle: newHero.subtitle,
+      });
+      alert('Hero zaktualizowany.');
+      setEditingHero(null);
+      setNewHero({ slug: '', title: '', subtitle: '' });
+      fetchHeros();
+    } catch (err) {
+      console.error('Błąd aktualizacji hero:', err);
+    }
+  };
+
+  const handleCancelEditHero = () => {
+    setEditingHero(null);
+    setNewHero({ slug: '', title: '', subtitle: '' });
   };
 
   const handleDeleteHero = async (id) => {
@@ -79,150 +108,145 @@ const AdminPanel = () => {
     fetchHeros();
   };
 
-  const handleEditHero = async (id) => {
-  const updatedHeading = prompt('Nowy nagłówek:');
-  const updatedSubheading = prompt('Nowy podtytuł:');
-  if (!updatedHeading || !updatedSubheading) return;
+  // GROUP HANDLING
+  const handleGroupChange = (e) => {
+    const { name, value } = e.target;
+    setNewGroup((prev) => ({ ...prev, [name]: value }));
+  };
 
-  const changeImage = window.confirm('Czy chcesz zmienić obrazek?');
-  if (changeImage) {
-    const fileInput = document.createElement('input');
-    fileInput.type = 'file';
-    fileInput.accept = 'image/*';
-    fileInput.onchange = async (e) => {
-      const image = e.target.files[0];
-      const formData = new FormData();
-      formData.append('image', image);
-      formData.append('heading', updatedHeading);
-      formData.append('subheading', updatedSubheading);
-
-      try {
-        await axios.put(`http://localhost:5000/api/hero/${id}`, formData, {
-          headers: { 'Content-Type': 'multipart/form-data' }
-        });
-        fetchHeros();
-      } catch (err) {
-        console.error('Błąd aktualizacji hero (z obrazkiem):', err);
-      }
-    };
-    fileInput.click();
-  } else {
+  const handleAddGroup = async () => {
     try {
-      await axios.put(`http://localhost:5000/api/hero/${id}`, {
-        heading: updatedHeading,
-        subheading: updatedSubheading
-      });
-      fetchHeros();
+      await axios.post('http://localhost:5000/api/groups', newGroup);
+      alert('Nowa grupa została dodana.');
+      setNewGroup({ slug: '', name: '', description: '' });
+      fetchGroups();
     } catch (err) {
-      console.error('Błąd aktualizacji hero:', err);
+      console.error('Błąd dodawania grupy:', err);
     }
-  }
-};
+  };
+
+  const handleEditGroup = (group) => {
+    setEditingGroup(group);
+    setNewGroup({ slug: group.slug, name: group.name, description: group.description });
+  };
+
+  const handleSaveEditGroup = async () => {
+    try {
+      await axios.put(`http://localhost:5000/api/groups/${editingGroup.id}`, {
+        name: newGroup.name,
+        description: newGroup.description,
+      });
+      alert('Grupa zaktualizowana.');
+      setEditingGroup(null);
+      setNewGroup({ slug: '', name: '', description: '' });
+      fetchGroups();
+    } catch (err) {
+      console.error('Błąd edycji grupy:', err);
+    }
+  };
+
+  const handleCancelEditGroup = () => {
+    setEditingGroup(null);
+    setNewGroup({ slug: '', name: '', description: '' });
+  };
+
+  const handleDeleteGroup = async (id) => {
+    await axios.delete(`http://localhost:5000/api/groups/${id}`);
+    fetchGroups();
+  };
 
   return (
     <Layout leftSidebar={null} rightSidebar={null}>
       <div className="max-w-5xl mx-auto mt-10 bg-white dark:bg-gray-900 shadow rounded p-6 text-gray-900 dark:text-gray-100">
         <h1 className="text-2xl font-bold text-red-600 dark:text-red-400 mb-6">Panel administratora</h1>
 
-        {/* Zarządzanie hero */}
-        <div className="mb-10">
+        {/* HERO SEKCJE */}
+        <section className="mb-10">
           <h2 className="text-xl font-bold mb-4 text-blue-700 dark:text-blue-300">Zarządzaj Hero sekcjami</h2>
 
-          <div className="space-y-4 mb-6">
-            {heros.map((hero) => (
-              <div key={hero.id} className="bg-gray-100 dark:bg-gray-800 p-4 rounded shadow border dark:border-gray-600">
-                <div><strong>Strona:</strong> {hero.page}</div>
-                <div><strong>Nagłówek:</strong> {hero.heading}</div>
-                <div><strong>Podtytuł:</strong> {hero.subheading}</div>
-                <div>
-                  <strong>Obrazek:</strong>{' '}
-                  <a href={hero.image_url} className="text-blue-500 underline ml-1" target="_blank" rel="noreferrer">
-                    Zobacz
-                  </a>
-                </div>
-                <div className="mt-2 space-x-2">
-                  <button
-                    className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded"
-                    onClick={() => handleEditHero(hero.id)}
-                  >
-                    Edytuj
-                  </button>
-                  <button
-                    className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
-                    onClick={() => handleDeleteHero(hero.id)}
-                  >
-                    Usuń
-                  </button>
-                </div>
+          {heros.map((hero) => (
+            <div key={hero.id} className="bg-gray-100 dark:bg-gray-800 p-4 rounded shadow border dark:border-gray-600 mb-3">
+              <div><strong>Strona:</strong> {hero.slug}</div>
+              <div><strong>Nagłówek:</strong> {hero.title}</div>
+              <div><strong>Podtytuł:</strong> {hero.subtitle}</div>
+              <div className="mt-2 space-x-2">
+                <button onClick={() => handleEditHero(hero)} className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded">Edytuj</button>
+                <button onClick={() => handleDeleteHero(hero.id)} className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">Usuń</button>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
 
           <div className="space-y-2">
-            <input
-              type="text"
-              name="page"
-              value={newHero.page}
-              onChange={handleHeroChange}
-              placeholder="Nazwa strony (np. grupa-offroad)"
-              className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
-            />
-            <input
-              type="text"
-              name="heading"
-              value={newHero.heading}
-              onChange={handleHeroChange}
-              placeholder="Nagłówek"
-              className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
-            />
-            <input
-              type="text"
-              name="subheading"
-              value={newHero.subheading}
-              onChange={handleHeroChange}
-              placeholder="Podtytuł"
-              className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
-            />
-            <input
-              type="file"
-              onChange={handleImageChange}
-              accept="image/*"
-              className="dark:text-white"
-            />
-            <button
-              onClick={handleAddHero}
-              className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded mt-2"
-            >
-              Dodaj nową sekcję hero
-            </button>
+            <input type="text" name="slug" value={newHero.slug} onChange={handleHeroChange} placeholder="Slug strony (np. groups)" disabled={editingHero !== null} className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700" />
+            <input type="text" name="title" value={newHero.title} onChange={handleHeroChange} placeholder="Nagłówek" className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700" />
+            <input type="text" name="subtitle" value={newHero.subtitle} onChange={handleHeroChange} placeholder="Podtytuł" className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700" />
+            {editingHero ? (
+              <>
+                <button onClick={handleSaveEditHero} className="bg-blue-600 text-white px-4 py-2 rounded">Zapisz</button>
+                <button onClick={handleCancelEditHero} className="bg-gray-600 text-white px-4 py-2 rounded ml-2">Anuluj</button>
+              </>
+            ) : (
+              <button onClick={handleAddHero} className="bg-green-600 text-white px-4 py-2 rounded">Dodaj sekcję hero</button>
+            )}
           </div>
-        </div>
+        </section>
 
-        {/* Tabela użytkowników */}
+        {/* GRUPY */}
+        <section className="mb-10">
+          <h2 className="text-xl font-bold mb-4 text-purple-700 dark:text-purple-300">Zarządzaj Grupami</h2>
+
+          {groups.map((group) => (
+            <div key={group.id} className="bg-gray-100 dark:bg-gray-800 p-4 rounded shadow border dark:border-gray-600 mb-3">
+              <div><strong>Slug:</strong> {group.slug}</div>
+              <div><strong>Nazwa:</strong> {group.name}</div>
+              <div><strong>Opis:</strong> {group.description}</div>
+              <div className="mt-2 space-x-2">
+                <button onClick={() => handleEditGroup(group)} className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded">Edytuj</button>
+                <button onClick={() => handleDeleteGroup(group.id)} className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">Usuń</button>
+              </div>
+            </div>
+          ))}
+
+          <div className="space-y-2">
+            <input type="text" name="slug" value={newGroup.slug} onChange={handleGroupChange} placeholder="Slug grupy (np. tuning)" disabled={editingGroup !== null} className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700" />
+            <input type="text" name="name" value={newGroup.name} onChange={handleGroupChange} placeholder="Nazwa grupy" className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700" />
+            <input type="text" name="description" value={newGroup.description} onChange={handleGroupChange} placeholder="Opis grupy" className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700" />
+            {editingGroup ? (
+              <>
+                <button onClick={handleSaveEditGroup} className="bg-blue-600 text-white px-4 py-2 rounded">Zapisz</button>
+                <button onClick={handleCancelEditGroup} className="bg-gray-600 text-white px-4 py-2 rounded ml-2">Anuluj</button>
+              </>
+            ) : (
+              <button onClick={handleAddGroup} className="bg-green-600 text-white px-4 py-2 rounded">Dodaj grupę</button>
+            )}
+          </div>
+        </section>
+
+        {/* UŻYTKOWNICY */}
         <table className="min-w-full table-auto border border-gray-300 dark:border-gray-700">
           <thead>
-            <tr className="bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-100">
-              <th className="p-2 border dark:border-gray-700">Email</th>
-              <th className="p-2 border dark:border-gray-700">Nazwa użytkownika</th>
-              <th className="p-2 border dark:border-gray-700">Rola</th>
-              <th className="p-2 border dark:border-gray-700">Zablokowany</th>
-              <th className="p-2 border dark:border-gray-700">Akcje</th>
+            <tr className="bg-gray-200 dark:bg-gray-800">
+              <th className="p-2 border">Email</th>
+              <th className="p-2 border">Nazwa</th>
+              <th className="p-2 border">Rola</th>
+              <th className="p-2 border">Zablokowany</th>
+              <th className="p-2 border">Akcje</th>
             </tr>
           </thead>
           <tbody>
             {users.map((user) => (
-              <tr key={user.id} className="text-center text-gray-900 dark:text-gray-100">
-                <td className="p-2 border dark:border-gray-700">{user.email}</td>
-                <td className="p-2 border dark:border-gray-700">{user.username}</td>
-                <td className="p-2 border dark:border-gray-700">{user.role}</td>
-                <td className="p-2 border dark:border-gray-700">{user.isBlocked ? 'Tak' : 'Nie'}</td>
-                <td className="p-2 border dark:border-gray-700 space-x-2">
-                  <button onClick={() => handleBlock(user.id)} className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded">Zablokuj</button>
-                  <button onClick={() => handleUnblock(user.id)} className="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded">Odblokuj</button>
+              <tr key={user.id}>
+                <td className="p-2 border">{user.email}</td>
+                <td className="p-2 border">{user.username}</td>
+                <td className="p-2 border">{user.role}</td>
+                <td className="p-2 border">{user.isBlocked ? 'Tak' : 'Nie'}</td>
+                <td className="p-2 border space-x-2">
+                  <button onClick={() => handleBlock(user.id)} className="bg-red-500 text-white px-2 py-1 rounded">Zablokuj</button>
+                  <button onClick={() => handleUnblock(user.id)} className="bg-green-500 text-white px-2 py-1 rounded">Odblokuj</button>
                   {user.role === 'admin' ? (
-                    <button onClick={() => handleRoleChange(user.id, 'user')} className="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded">Odbierz admina</button>
+                    <button onClick={() => handleRoleChange(user.id, 'user')} className="bg-yellow-500 text-white px-2 py-1 rounded">Odbierz admina</button>
                   ) : (
-                    <button onClick={() => handleRoleChange(user.id, 'admin')} className="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded">Nadaj admina</button>
+                    <button onClick={() => handleRoleChange(user.id, 'admin')} className="bg-blue-500 text-white px-2 py-1 rounded">Nadaj admina</button>
                   )}
                 </td>
               </tr>
