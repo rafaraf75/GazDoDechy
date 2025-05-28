@@ -3,7 +3,7 @@ const cloudinary = require('../config/cloudinaryConfig');
 
 // POST /api/posts
 exports.createPost = async (req, res) => {
-  const { description, user_id } = req.body;
+  const { description, user_id, group_id } = req.body;
   const files = req.files || [];
 
   try {
@@ -29,7 +29,7 @@ exports.createPost = async (req, res) => {
     // Utwórz post w Supabase
     const { data: post, error: postErr } = await supabaseAdmin
       .from('posts')
-      .insert([{ description, user_id }])
+      .insert([{ description, user_id, group_id }])
       .select()
       .single();
 
@@ -58,11 +58,14 @@ exports.createPost = async (req, res) => {
 // GET /api/posts
 exports.getAllPosts = async (req, res) => {
   try {
-    const { data, error } = await supabaseAdmin
+    const { group_id } = req.query;
+
+    const query = supabaseAdmin
       .from('posts')
       .select(`
         *,
         users:user_id (username, profilePicture),
+        groups:group_id (name, slug),
         post_images (url),
         comments (
           id
@@ -70,15 +73,19 @@ exports.getAllPosts = async (req, res) => {
       `)
       .order('created_at', { ascending: false });
 
-    if (error) throw error;
+    if (group_id) {
+      query.eq('group_id', group_id);
+    }
 
+    const { data, error } = await query;
+
+    if (error) throw error;
     // Dodaj count komentarzy
     const postsWithCommentCount = data.map(post => ({
       ...post,
       comment_count: post.comments?.length || 0,
     }));
 
-    // Usuń pełne dane `comments` (nie są nam tu potrzebne)
     postsWithCommentCount.forEach(p => delete p.comments);
 
     res.json(postsWithCommentCount);

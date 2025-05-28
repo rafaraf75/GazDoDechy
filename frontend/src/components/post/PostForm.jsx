@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const PostForm = ({ onPostAdded }) => {
+const PostForm = ({ onPostAdded, groupId }) => {
   const [description, setDescription] = useState('');
   const [images, setImages] = useState([]);
   const [previews, setPreviews] = useState([]);
@@ -37,6 +37,10 @@ const PostForm = ({ onPostAdded }) => {
     const formData = new FormData();
     formData.append('description', description);
     formData.append('user_id', localStorage.getItem('userId'));
+    if (groupId) {
+      formData.append('group_id', groupId); // 👈 dodajemy
+      }
+
 
     images.forEach((file) => {
       formData.append('images', file);

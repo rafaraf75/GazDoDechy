@@ -14,6 +14,19 @@ const Post = ({ post, onEdit, onDelete, showActions = false }) => {
         {post.users?.username}
       </div>
 
+      {/* Info o grupie */}
+      {post.groups && (
+        <div className="text-sm text-blue-600 dark:text-blue-400 italic mb-2">
+          Opublikowano w grupie:{' '}
+          <a
+            href={`/groups/${post.groups.slug}`}
+            className="underline hover:text-blue-800 dark:hover:text-blue-300"
+          >
+            {post.groups.name}
+          </a>
+        </div>
+      )}
+
       <p className="mb-2">{post.description}</p>
 
       {post.post_images?.length > 0 && (
