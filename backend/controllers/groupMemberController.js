@@ -39,3 +39,23 @@ exports.checkMembership = async (req, res) => {
   }
 };
 
+// DELETE /api/group-members
+exports.leaveGroup = async (req, res) => {
+  const { group_id, user_id } = req.body;
+
+  try {
+    const { error } = await supabaseAdmin
+      .from('group_members')
+      .delete()
+      .eq('group_id', group_id)
+      .eq('user_id', user_id);
+
+    if (error) throw error;
+
+    res.json({ message: 'Opuszczono grupę' });
+  } catch (err) {
+    console.error('Błąd opuszczania grupy:', err);
+    res.status(500).json({ message: 'Błąd serwera' });
+  }
+};
+
