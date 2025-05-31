@@ -52,6 +52,20 @@ const GroupDetails = () => {
     }
   };
 
+  const handleLeave = async () => {
+    try {
+      await axios.delete('http://localhost:5000/api/group-members', {
+        data: {
+          group_id: group.id,
+          user_id: userId,
+        },
+      });
+      setIsMember(false);
+    } catch (err) {
+      console.error('Błąd opuszczania grupy:', err);
+    }
+  };
+
   if (loading) return <p className="p-4 text-gray-500">Ładowanie...</p>;
 
   if (error) {
@@ -69,16 +83,23 @@ const GroupDetails = () => {
         <p className="text-gray-600 dark:text-gray-300 mb-3">{group.description}</p>
 
         {isMember ? (
-          <span className="inline-block bg-green-600 text-white px-4 py-2 rounded">Jesteś członkiem</span>
+          <button
+            onClick={handleLeave}
+            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded"
+          >
+            Opuść grupę
+          </button>
         ) : (
-          <button onClick={handleJoin} className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+          <button
+            onClick={handleJoin}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+          >
             Dołącz do grupy
           </button>
         )}
       </div>
 
       {isMember && <PostForm groupId={group.id} />}
-
       <PostFeed groupId={group.id} />
     </Layout>
   );

@@ -18,7 +18,7 @@ import UserEvents from './components/user/UserEvents';
 
 import Market from './components/sections/market/Market';
 import Tips from './components/sections/Tips';
-import Events from './components/sections/Events';
+import Events from './components/events/Events';
 import Groups from './components/group/Groups';
 import LiveHelp from './components/sections/LiveHelp';
 import MarketDetails from './components/sections/market/MarketDetails';
