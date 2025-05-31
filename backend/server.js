@@ -12,6 +12,8 @@ const reactionRoutes = require('./routes/reactions');
 const heroRoutes = require('./routes/hero');
 const groupRoutes = require('./routes/group');
 const groupMembersRoutes = require('./routes/groupMembers');
+const eventRoutes = require('./routes/events');
+const eventAttendanceRoutes = require('./routes/eventAttendance');
 
 const express = require('express');
 const cors = require('cors');
@@ -80,6 +82,8 @@ app.use('/api/reactions', reactionRoutes);
 app.use('/api/hero', heroRoutes);
 app.use('/api/groups', groupRoutes);
 app.use('/api/group-members', groupMembersRoutes);
+app.use('/api/events', eventRoutes);
+app.use('/api/event-attendance', eventAttendanceRoutes);
 
 // Start serwera
 const PORT = process.env.PORT || 5000;
