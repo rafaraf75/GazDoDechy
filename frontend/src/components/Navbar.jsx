@@ -47,11 +47,16 @@ const Navbar = ({theme, setTheme }) => {
             </Link>
 
             {role === 'admin' && (
-              <Link to="/admin" className="text-sm text-red-500 hover:underline">
-                Panel administratora
-              </Link>
-            )}
+              <>
+                <Link to="/admin" className="text-sm text-red-500 hover:underline">
+                  Panel administratora
+                </Link>
 
+                <Link to="/mechanic-requests-admin" className="text-sm text-green-500 hover:underline">
+                  Zgłoszenia do mechanika
+                </Link>
+              </>
+            )}
             <button
               onClick={handleLogout}
               className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
