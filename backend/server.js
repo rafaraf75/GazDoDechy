@@ -14,6 +14,8 @@ const groupRoutes = require('./routes/group');
 const groupMembersRoutes = require('./routes/groupMembers');
 const eventRoutes = require('./routes/events');
 const eventAttendanceRoutes = require('./routes/eventAttendance');
+const mechanicRequestRoute = require('./routes/mechanicRequest');
+const mechanicReplyRoutes = require('./routes/mechanicReplies');
 
 const express = require('express');
 const cors = require('cors');
@@ -84,7 +86,8 @@ app.use('/api/groups', groupRoutes);
 app.use('/api/group-members', groupMembersRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/event-attendance', eventAttendanceRoutes);
-
+app.use('/api/mechanic-request', mechanicRequestRoute);
+app.use('/api/mechanic-replies', mechanicReplyRoutes);
 // Start serwera
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
