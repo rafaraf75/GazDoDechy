@@ -2,17 +2,14 @@ import React, { useState } from 'react';
 import Layout from '../Layout';
 import DashboardSidebar from '../DashboardSidebar';
 import MechanicRequestForm from './MechanicRequestForm';
+import Hero from '../common/Hero';
 
 const LiveHelp = () => {
-  const [showForm, setShowForm] = useState(false); // stan widoczności formularza
+  const [showForm, setShowForm] = useState(false);
 
   return (
     <Layout leftSidebar={<DashboardSidebar />}>
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Porady online</h1>
-      <p className="text-gray-700 dark:text-gray-300 mb-4">
-        Potrzebujesz pomocy od mechanika? Skontaktuj się z naszymi ekspertami!
-      </p>
-
+      <Hero slug="help" />
       <div className="space-y-4">
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
           <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">Napisz do mechanikia</h2>
@@ -35,13 +32,19 @@ const LiveHelp = () => {
             </div>
           )}
         </div>
-
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+       <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
           <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">Wideo konsultacja</h2>
-          <p className="text-sm text-gray-600 dark:text-gray-300 italic">Umów się na wideorozmowę z doradcą</p>
-          <button className="mt-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-            Zarezerwuj termin
-          </button>
+          <p className="text-sm text-gray-600 dark:text-gray-300 italic">
+            Porozmawiaj bezpośrednio z mechanikiem przez WhatsApp
+          </p>
+          <a
+            href="https://wa.me/34623306850?text=Cześć%2C%20chciałbym%20umówić%20się%20na%20wideorozmowę%20z%20mechanikiem."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block mt-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+          >
+            Zadzwoń przez WhatsApp
+          </a>
         </div>
       </div>
     </Layout>

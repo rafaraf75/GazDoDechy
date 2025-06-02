@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Layout from '../Layout';
 import DashboardSidebar from '../DashboardSidebar';
+import ArchivedRequestModal from '../help/ArchivedRequestModal';
 
 const MechanicRequestAdmin = () => {
   const [requests, setRequests] = useState([]);
@@ -9,6 +10,8 @@ const MechanicRequestAdmin = () => {
   const [loading, setLoading] = useState(true);
   const [replyingTo, setReplyingTo] = useState(null);
   const [replyContent, setReplyContent] = useState('');
+  const [selectedArchived, setSelectedArchived] = useState(null);
+  const [selectedReply, setSelectedReply] = useState('');
 
   useEffect(() => {
     const fetchRequests = async () => {
@@ -80,6 +83,17 @@ const MechanicRequestAdmin = () => {
     }
   };
 
+  const handleArchivedClick = async (request) => {
+  try {
+    const res = await axios.get(`http://localhost:5000/api/mechanic-replies/${request.id}`);
+    setSelectedReply(res.data.reply);
+  } catch (err) {
+    console.warn('Nie udało się pobrać odpowiedzi:', err);
+    setSelectedReply('Brak odpowiedzi');
+  }
+  setSelectedArchived(request);
+};
+
   return (
     <Layout leftSidebar={<DashboardSidebar />}>
       <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
@@ -146,13 +160,24 @@ const MechanicRequestAdmin = () => {
       ) : (
         <div className="space-y-2">
           {archived.map((req) => (
-            <div key={req.id} className="bg-gray-100 dark:bg-gray-700 p-3 rounded">
-              <p className="text-sm text-gray-600 dark:text-gray-300">
-                Zgłoszenie od <strong>{req.name}</strong> ({req.brand} {req.model}, {req.year}) zostało zarchiwizowane.
-              </p>
-            </div>
-          ))}
+          <div
+            key={req.id}
+            onClick={() => handleArchivedClick(req)}
+            className="bg-gray-100 dark:bg-gray-700 p-3 rounded cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition"
+          >
+            <p className="text-sm text-gray-600 dark:text-gray-300">
+              Zgłoszenie od <strong>{req.name}</strong> ({req.brand} {req.model}, {req.year}) zostało zarchiwizowane.
+            </p>
+          </div>
+        ))}
         </div>
+      )}
+      {selectedArchived && (
+        <ArchivedRequestModal
+          request={selectedArchived}
+          reply={selectedReply}
+          onClose={() => setSelectedArchived(null)}
+        />
       )}
     </Layout>
   );
