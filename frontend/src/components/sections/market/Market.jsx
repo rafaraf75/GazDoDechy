@@ -5,6 +5,7 @@ import DashboardSidebar from '../../DashboardSidebar';
 import MarketSearchForm from './MarketSearchForm';
 import MarketItemCard from './MarketItemCard';
 import axios from 'axios';
+import Hero from '../../common/Hero';
 
 const Market = () => {
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ const Market = () => {
 
   return (
     <Layout leftSidebar={<DashboardSidebar />}>
+      <Hero slug="market" />
       <div className="mb-6">
         {/* KATEGORIE + DODAJ OGŁOSZENIE */}
         <div className="flex flex-wrap justify-between items-center gap-4 mb-4">

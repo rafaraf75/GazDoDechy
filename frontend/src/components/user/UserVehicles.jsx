@@ -4,6 +4,7 @@ import UserSidebar from './UserSidebar';
 import RightSidebar from '../RightSidebar';
 import axios from 'axios';
 import PostImageSlider from '../post/PostImageSlider';
+import Hero from '../common/Hero';
 
 const UserVehicles = () => {
   const [userPosts, setUserPosts] = useState([]);
@@ -26,8 +27,8 @@ const UserVehicles = () => {
 
   return (
     <Layout leftSidebar={<UserSidebar />} rightSidebar={<RightSidebar />}>
+      <Hero slug="user-vehicles" />
       <div className="text-gray-900 dark:text-white p-4">
-        <h1 className="text-2xl font-bold mb-6">Moje pojazdy</h1>
 
         {userPosts.length === 0 ? (
           <p className="text-gray-500 italic">Tutaj pojawi się lista Twoich pojazdów.</p>

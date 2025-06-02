@@ -4,6 +4,7 @@ import Layout from '../Layout';
 import UserSidebar from './UserSidebar';
 import RightSidebar from '../RightSidebar';
 import axios from 'axios';
+import Hero from '../common/Hero';
 
 const UserAds = () => {
   const [ads, setAds] = useState([]);
@@ -37,8 +38,8 @@ const UserAds = () => {
 
   return (
     <Layout leftSidebar={<UserSidebar />} rightSidebar={<RightSidebar />}>
+      <Hero slug="user-ads" />
       <div className="p-4">
-        <h1 className="text-xl font-bold mb-4">Moje ogłoszenia</h1>
 
         {ads.length === 0 ? (
           <p>Nie masz jeszcze żadnych ogłoszeń.</p>

@@ -3,6 +3,7 @@ import Layout from '../Layout';
 import UserSidebar from './UserSidebar';
 import RightSidebar from '../RightSidebar';
 import axios from 'axios';
+import Hero from '../common/Hero';
 
 const EditProfile = () => {
   const [formData, setFormData] = useState({
@@ -93,7 +94,8 @@ const EditProfile = () => {
 
   return (
     <Layout leftSidebar={<UserSidebar />} rightSidebar={<RightSidebar />}>
-    <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-lg rounded-lg p-6">
+      <Hero slug="user-settings" />
+    <div className="max-w-4xl mx-auto w-full bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-lg rounded-lg p-6">
       <h1 className="text-2xl font-bold mb-4">Twój profil</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
