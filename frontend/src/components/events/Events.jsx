@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import Layout from '../Layout';
 import DashboardSidebar from '../DashboardSidebar';
 import RightSidebar from '../RightSidebar';
-import CalendarView from './CalendarView'; // nasz nowy komponent
+import CalendarView from './CalendarView';
 import EventForm from './EventForm';
 import EventList from './EventList';
+import Hero from '../common/Hero';
 
 const Events = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -29,15 +30,7 @@ const Events = () => {
   return (
     <Layout leftSidebar={<DashboardSidebar />} rightSidebar={<RightSidebar />}>
       <div className="space-y-6">
-        <div className="bg-white dark:bg-gray-800 p-6 rounded shadow">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-            Zloty i wydarzenia
-          </h1>
-          <p className="text-gray-600 dark:text-gray-300">
-            Wybierz datę i zobacz zaplanowane wydarzenia.
-          </p>
-        </div>
-
+        <Hero slug="events" />
         <div className="flex flex-col lg:flex-row gap-6 bg-white dark:bg-gray-800 p-6 rounded shadow">
           {/* Nowy kalendarz */}
           <div className="w-full lg:w-1/3">

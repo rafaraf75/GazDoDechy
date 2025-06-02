@@ -16,6 +16,10 @@ const eventRoutes = require('./routes/events');
 const eventAttendanceRoutes = require('./routes/eventAttendance');
 const mechanicRequestRoute = require('./routes/mechanicRequest');
 const mechanicReplyRoutes = require('./routes/mechanicReplies');
+const ytHelpRoutes = require('./routes/ytHelp');
+const brandRoutes = require('./routes/brands');
+const modelRoutes = require('./routes/models');
+const repairCategoryRoutes = require('./routes/repairCategories');
 
 const express = require('express');
 const cors = require('cors');
@@ -88,6 +92,11 @@ app.use('/api/events', eventRoutes);
 app.use('/api/event-attendance', eventAttendanceRoutes);
 app.use('/api/mechanic-request', mechanicRequestRoute);
 app.use('/api/mechanic-replies', mechanicReplyRoutes);
+app.use('/api/yt-help', ytHelpRoutes);
+app.use('/api/brands', brandRoutes);
+app.use('/api/models', modelRoutes);
+app.use('/api/repair-categories', repairCategoryRoutes);
+
 // Start serwera
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
