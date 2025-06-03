@@ -20,6 +20,7 @@ const ytHelpRoutes = require('./routes/ytHelp');
 const brandRoutes = require('./routes/brands');
 const modelRoutes = require('./routes/models');
 const repairCategoryRoutes = require('./routes/repairCategories');
+const adFollowRoutes = require('./routes/adFollow');
 
 const express = require('express');
 const cors = require('cors');
@@ -96,6 +97,7 @@ app.use('/api/yt-help', ytHelpRoutes);
 app.use('/api/brands', brandRoutes);
 app.use('/api/models', modelRoutes);
 app.use('/api/repair-categories', repairCategoryRoutes);
+app.use('/api/followed-ads', adFollowRoutes);
 
 // Start serwera
 const PORT = process.env.PORT || 5000;
