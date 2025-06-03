@@ -10,8 +10,8 @@ const Tips = () => {
     <Layout leftSidebar={<DashboardSidebar />} rightSidebar={<RightSidebar />}>
       <Hero slug="tips" />
       {/* Sekcja z poradami */}
-      <div className="max-w-6xl mx-auto bg-gray-800 border border-gray-700 shadow-md rounded p-6">
-        <h1 className="text-2xl font-semibold text-white mb-2">Porady „Jak to naprawić”</h1>
+      <div className="max-w-6xl mx-auto bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 shadow-md rounded p-6">
+        <h1 className="text-2xl font-semibold text-gray-800 dark:text-white mb-2">Porady „Jak to naprawić”</h1>
         <p className="text-gray-400 mb-6">
           Tu znajdziesz porady, filmy i materiały naprawcze.
         </p>

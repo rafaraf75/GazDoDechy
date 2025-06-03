@@ -36,7 +36,6 @@ exports.searchYoutube = async (req, res) => {
         part: 'snippet',
         maxResults: 6,
         type: 'video',
-        channelId: 'UC0GTP1z4q37R3lOZ6QzM5Pw'
       }
     });
 

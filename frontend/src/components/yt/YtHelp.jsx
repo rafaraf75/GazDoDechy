@@ -69,7 +69,7 @@ const YtHelp = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
+    <div className="max-w-4xl mx-auto p-4 bg-white dark:bg-gray-900 text-gray-900 dark:text-white rounded shadow">
       <h2 className="text-xl font-bold mb-4 dark:text-white">Porady wideo z YouTube</h2>
 
       <div className="grid sm:grid-cols-3 gap-4 mb-4">

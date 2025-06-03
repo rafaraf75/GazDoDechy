@@ -26,6 +26,7 @@ const CalendarView = () => {
   }, []);
 
   const handleDateSelect = (date) => {
+    if (!date || isNaN(date.getTime())) return;
     setSelectedDate(date);
     const dateStr = format(date, 'yyyy-MM-dd');
     const matchingEvent = events.find((event) => event.date === dateStr);
@@ -54,7 +55,7 @@ const CalendarView = () => {
         Wybierz datę i zobacz zaplanowane wydarzenia.
       </p>
 
-      <div className="bg-white dark:bg-gray-800 p-4 rounded shadow">
+      <div className="bg-white dark:bg-gray-800 p-4 rounded shadow min-w-[340px] overflow-visible">
         <DayPicker
           mode="single"
           selected={selectedDate}

@@ -53,24 +53,27 @@ const RightSidebar = () => {
   return (
     <div className="bg-white dark:bg-gray-800 shadow p-4 space-y-3 rounded-b-lg">
       <h2 className="font-semibold text-lg text-gray-900 dark:text-gray-100">Czat / Znajomi</h2>
-      <ul className="text-sm text-gray-700 dark:text-gray-300 space-y-1">
-        {users.map((user) => (
-          <li
-            key={user.id}
-            className="cursor-pointer hover:underline"
-            onClick={() => startPrivateChat(user.id, user.username)}
-          >
-            {user.username}{' '}
-            <span
-              className={`text-xs ${
-                onlineUsers.includes(user.id) ? 'text-green-500' : 'text-gray-400'
-              }`}
-            >
-              ({onlineUsers.includes(user.id) ? 'online' : 'offline'})
-            </span>
-          </li>
-        ))}
-      </ul>
+      <ul className="space-y-2">
+  {users.map((user) => {
+    const isOnline = onlineUsers.includes(user.id);
+    return (
+      <li
+        key={user.id}
+        onClick={() => startPrivateChat(user.id, user.username)}
+        className={`px-3 py-2 rounded-md cursor-pointer transition-all duration-150
+          ${isOnline ? 'bg-green-100 dark:bg-green-900' : 'bg-gray-200 dark:bg-gray-700'}
+          hover:bg-blue-500 hover:text-white`}
+      >
+        <div className="flex justify-between items-center">
+          <span className="font-medium">{user.username}</span>
+          <span className={`text-xs ${isOnline ? 'text-green-600' : 'text-gray-500'}`}>
+            {isOnline ? '● online' : '○ offline'}
+          </span>
+        </div>
+      </li>
+    );
+  })}
+</ul>
       <p className="text-xs italic mt-4 text-gray-400 dark:text-gray-500">
         Kliknij użytkownika, by rozpocząć czat.
       </p>
@@ -80,6 +83,9 @@ const RightSidebar = () => {
         <PrivateChatModal
           user={selectedUser}
           onClose={() => setSelectedUser(null)}
+          socket={socket}
+          userId={localStorage.getItem('userId')}
+          senderName={users.find(u => u.id === localStorage.getItem('userId'))?.username || 'Ty'}
         />
       )}
     </div>

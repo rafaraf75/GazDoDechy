@@ -1,17 +1,28 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { SocketContext } from '../context/SocketContext';
 
-const Navbar = ({theme, setTheme }) => {
+const Navbar = ({ theme, setTheme }) => {
   const navigate = useNavigate();
+  const socket = useContext(SocketContext);
   const username = localStorage.getItem('username');
   const role = localStorage.getItem('role');
-
   const isDark = theme === 'dark';
 
   const handleLogout = () => {
+    // powiadom serwer o rozłączeniu
+    const userId = localStorage.getItem('userId');
+  if (socket && socket.connected && userId) {
+    socket.emit('user_disconnected', userId);
+  }
+
+    // Wyczyść dane z localStorage
     localStorage.removeItem('token');
     localStorage.removeItem('username');
     localStorage.removeItem('role');
+    localStorage.removeItem('userId');
+
+    // Przejdź do logowania
     navigate('/login');
   };
 
@@ -51,12 +62,12 @@ const Navbar = ({theme, setTheme }) => {
                 <Link to="/admin" className="text-sm text-red-500 hover:underline">
                   Panel administratora
                 </Link>
-
                 <Link to="/mechanic-requests-admin" className="text-sm text-green-500 hover:underline">
                   Zgłoszenia do mechanika
                 </Link>
               </>
             )}
+
             <button
               onClick={handleLogout}
               className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
