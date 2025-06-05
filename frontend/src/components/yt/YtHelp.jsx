@@ -77,7 +77,7 @@ const YtHelp = () => {
           name="brand_id"
           value={selected.brand_id}
           onChange={handleBrandChange}
-          className="p-2 border border-gray-600 rounded dark:bg-gray-700 dark:text-white"
+          className="p-2 border border border-[#b87333] rounded dark:bg-gray-700 dark:text-white"
         >
           <option value="">Wybierz markę</option>
           {brands.map((b) => (
@@ -89,7 +89,7 @@ const YtHelp = () => {
           name="model_id"
           value={selected.model_id}
           onChange={handleChange}
-          className="p-2 border border-gray-600 rounded dark:bg-gray-700 dark:text-white"
+          className="p-2 border border border-[#b87333] rounded dark:bg-gray-700 dark:text-white"
         >
           <option value="">Wybierz model</option>
           {models.map((m) => (
@@ -101,7 +101,7 @@ const YtHelp = () => {
           name="category_id"
           value={selected.category_id}
           onChange={handleChange}
-          className="p-2 border border-gray-600 rounded dark:bg-gray-700 dark:text-white"
+          className="p-2 border border border-[#b87333] rounded dark:bg-gray-700 dark:text-white"
         >
           <option value="">Wybierz kategorię</option>
           {categories.map((c) => (
@@ -113,7 +113,7 @@ const YtHelp = () => {
       <button
         onClick={handleSearch}
         disabled={loading}
-        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mb-6"
+        className="bg-blue-600 hover:bg-blue-700 border border-[#b87333] text-white px-4 py-2 rounded mb-6"
       >
         {loading ? 'Szukam...' : 'Szukaj'}
       </button>
@@ -123,7 +123,7 @@ const YtHelp = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {videos.map((video, idx) => (
           <div key={idx} onClick={() => setActiveVideo(video.videoId)} className="cursor-pointer">
-            <img src={video.thumbnail} alt={video.title} className="w-full rounded shadow" />
+            <img src={video.thumbnail} alt={video.title} className="w-full border border-[#b87333] rounded shadow" />
             <p className="mt-1 text-sm dark:text-white">{video.title}</p>
           </div>
         ))}
