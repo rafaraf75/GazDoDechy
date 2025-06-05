@@ -8,7 +8,7 @@ const MarketItemCard = ({ ad }) => {
 
   return (
     <Link to={`/market/${ad.id}`}>
-    <div className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg shadow p-4">
+    <div className="bg-white dark:bg-gray-800  border border-[#b87333] text-gray-900 dark:text-gray-100 rounded-lg shadow p-4">
       <img
         src={imageError || !imageUrl ? '/fallback.jpg' : imageUrl}
         alt={ad.title}

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Layout from '../../Layout';
-import DashboardSidebar from '../../DashboardSidebar';
+import Layout from '../../common/Layout';
+import DashboardSidebar from '../../dashboard/DashboardSidebar';
 
 const MarketEdit = () => {
   const { id } = useParams();
@@ -126,17 +126,17 @@ const MarketEdit = () => {
 
   return (
     <Layout leftSidebar={<DashboardSidebar />}>
-      <div className="bg-white dark:bg-gray-800 p-6 rounded shadow text-gray-900 dark:text-gray-100">
+      <div className="bg-white dark:bg-gray-800 p-6 rounded  border border-[#b87333] shadow text-gray-900 dark:text-gray-100">
         <h1 className="text-xl font-bold mb-4">Edytuj ogłoszenie</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input name="title" value={formData.title} onChange={handleChange}
-            placeholder="Tytuł" className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700" />
+            placeholder="Tytuł" className="w-full p-2 rounded  border border-[#b87333] bg-gray-100 dark:bg-gray-700" />
 
           <textarea name="description" value={formData.description} onChange={handleChange}
-            placeholder="Opis" className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700" />
+            placeholder="Opis" className="w-full p-2 rounded  border border-[#b87333] bg-gray-100 dark:bg-gray-700" />
 
           <select name="category_id" value={formData.category_id} onChange={handleChange}
-            className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700">
+            className="w-full p-2 rounded  border border-[#b87333] bg-gray-100 dark:bg-gray-700">
             <option value="">-- Wybierz kategorię --</option>
             {categories.map(cat => (
               <option key={cat.id} value={cat.id}>{cat.name}</option>
@@ -163,7 +163,7 @@ const MarketEdit = () => {
 
           {selectedCategoryName === 'Części' && (
             <select name="part_type_id" value={formData.part_type_id || ''} onChange={handleChange}
-              className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700">
+              className="w-full p-2 rounded  border border-[#b87333] bg-gray-100 dark:bg-gray-700">
               <option value="">-- Wybierz typ części --</option>
               {partTypes.map(p => (
                 <option key={p.id} value={p.id}>{p.name}</option>
@@ -172,7 +172,7 @@ const MarketEdit = () => {
           )}
 
           <input name="price" type="number" value={formData.price} onChange={handleChange}
-            placeholder="Cena" className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700" />
+            placeholder="Cena" className="w-full p-2 rounded  border border-[#b87333] bg-gray-100 dark:bg-gray-700" />
 
           <input type="file" multiple accept="image/*" onChange={handleNewImages} className="dark:text-white" />
 
@@ -188,7 +188,7 @@ const MarketEdit = () => {
             </div>
           )}
 
-          <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+          <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded  border border-[#b87333] hover:bg-blue-700">
             Zapisz zmiany
           </button>
         </form>

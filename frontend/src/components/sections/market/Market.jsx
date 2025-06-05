@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Layout from '../../Layout';
-import DashboardSidebar from '../../DashboardSidebar';
+import Layout from '../../common/Layout';
+import DashboardSidebar from '../../dashboard/DashboardSidebar';
 import MarketSearchForm from './MarketSearchForm';
 import MarketItemCard from './MarketItemCard';
 import axios from 'axios';
@@ -49,8 +49,8 @@ const Market = () => {
                 key={cat}
                 className={`px-4 py-2 rounded ${
                   selectedCategory === cat
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-blue-100 text-blue-900 dark:bg-gray-700 dark:text-white'
+                    ? 'bg-blue-600 text-white border border-[#b87333]'
+                    : 'bg-blue-100 text-blue-900 dark:bg-gray-700  border border-[#b87333] dark:text-white'
                 }`}
                 onClick={() => setSelectedCategory(cat)}
               >
@@ -61,7 +61,7 @@ const Market = () => {
 
           <button
             onClick={() => navigate('/market/add')}
-            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+            className="bg-green-600 text-white px-4 py-2  border border-[#b87333] rounded hover:bg-green-700"
           >
             Dodaj ogłoszenie
           </button>
@@ -75,7 +75,7 @@ const Market = () => {
       </div>
 
       {/* OGŁOSZENIA */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
         {ads.map((ad) => (
           <MarketItemCard key={ad.id} ad={ad} />
         ))}

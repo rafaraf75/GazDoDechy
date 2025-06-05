@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Layout from '../../Layout';
-import DashboardSidebar from '../../DashboardSidebar';
+import Layout from '../../common/Layout';
+import DashboardSidebar from '../../dashboard/DashboardSidebar';
 import axios from 'axios';
 
 const MarketAdd = () => {
@@ -140,14 +140,14 @@ const handleSubmit = async (e) => {
 
   return (
     <Layout leftSidebar={<DashboardSidebar />}>
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow max-w-2xl mx-auto">
+      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg  border border-[#b87333] shadow max-w-2xl mx-auto">
         <h2 className="text-xl font-bold mb-4">Dodaj ogłoszenie</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
 
           <input
             type="text"
             placeholder="Tytuł"
-            className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white"
+            className="w-full  border border-[#b87333] p-2 border rounded dark:bg-gray-700 dark:text-white"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
@@ -155,14 +155,14 @@ const handleSubmit = async (e) => {
 
           <textarea
             placeholder="Opis"
-            className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white"
+            className="w-full p-2 border border-[#b87333] rounded dark:bg-gray-700 dark:text-white"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
           />
 
           <select
-            className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white"
+            className="w-full p-2 border border-[#b87333] rounded dark:bg-gray-700 dark:text-white"
             value={categoryId}
             onChange={handleCategoryChange}
             required
@@ -180,14 +180,14 @@ const handleSubmit = async (e) => {
               <input
                 type="text"
                 placeholder="Marka"
-                className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white"
+                className="w-full p-2  border border-[#b87333] rounded dark:bg-gray-700 dark:text-white"
                 value={brand}
                 onChange={(e) => setBrand(e.target.value)}
               />
               <input
                 type="text"
                 placeholder="Model"
-                className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white"
+                className="w-full p-2 border border-[#b87333] rounded dark:bg-gray-700 dark:text-white"
                 value={model}
                 onChange={(e) => setModel(e.target.value)}
               />
@@ -199,14 +199,14 @@ const handleSubmit = async (e) => {
               <input
                 type="number"
                 placeholder="Rok produkcji"
-                className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white"
+                className="w-full p-2 border border-[#b87333] rounded dark:bg-gray-700 dark:text-white"
                 value={year}
                 onChange={(e) => setYear(e.target.value)}
               />
               <input
                 type="number"
                 placeholder="Przebieg (km)"
-                className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white"
+                className="w-full p-2 border border-[#b87333] rounded dark:bg-gray-700 dark:text-white"
                 value={mileage}
                 onChange={(e) => setMileage(e.target.value)}
               />
@@ -215,7 +215,7 @@ const handleSubmit = async (e) => {
 
           {selectedCategoryName === 'Części' && (
             <select
-              className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white"
+              className="w-full p-2 border border-[#b87333] rounded dark:bg-gray-700 dark:text-white"
               value={partTypeId}
               onChange={(e) => setPartTypeId(e.target.value)}
             >
@@ -232,7 +232,7 @@ const handleSubmit = async (e) => {
             <input
               type="number"
               placeholder="Cena (zł)"
-              className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white"
+              className="w-full p-2  border border-[#b87333] rounded dark:bg-gray-700 dark:text-white"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
               required
@@ -277,7 +277,7 @@ const handleSubmit = async (e) => {
 
           <button
             type="submit"
-            className="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700"
+            className="bg-green-600 text-white py-2 px-4  border border-[#b87333] rounded hover:bg-green-700"
           >
             Dodaj
           </button>

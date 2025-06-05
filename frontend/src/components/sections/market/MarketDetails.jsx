@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
-import Layout from '../../Layout';
-import DashboardSidebar from '../../DashboardSidebar';
+import Layout from '../../common/Layout';
+import DashboardSidebar from '../../dashboard/DashboardSidebar';
 import axios from 'axios';
 
 const MarketDetails = () => {
@@ -60,7 +60,7 @@ const MarketDetails = () => {
 
   return (
     <Layout leftSidebar={<DashboardSidebar />}>
-      <div className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg shadow p-6">
+      <div className="bg-white  border border-[#b87333] dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg shadow p-6">
         <h1 className="text-2xl font-bold mb-4">{ad.title}</h1>
 
         {mainImage && (
