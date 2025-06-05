@@ -38,7 +38,7 @@ const PostForm = ({ onPostAdded, groupId }) => {
     formData.append('description', description);
     formData.append('user_id', localStorage.getItem('userId'));
     if (groupId) {
-      formData.append('group_id', groupId); // 👈 dodajemy
+      formData.append('group_id', groupId);
       }
 
 
@@ -58,7 +58,7 @@ const PostForm = ({ onPostAdded, groupId }) => {
       alert('Post dodany!');
 
       if (onPostAdded) {
-        onPostAdded(); // 👈 odśwież posty po dodaniu
+        onPostAdded(); // odśwież posty po dodaniu
       }
     } catch (err) {
       console.error('Błąd dodawania posta:', err);
@@ -67,7 +67,7 @@ const PostForm = ({ onPostAdded, groupId }) => {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg shadow p-4">
+    <div className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg border border-[#b87333] shadow p-4">
       <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-gray-100">
         Witaj, {localStorage.getItem('username')}! Pochwal się swoim autem
       </h2>

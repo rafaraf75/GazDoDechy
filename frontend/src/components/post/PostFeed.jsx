@@ -26,13 +26,13 @@ const PostFeed = ({ groupId }) => {
   }, [fetchPosts]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 rounded border border-[#b87333]">
       {loading ? (
-        <div className="text-gray-500 dark:text-gray-400 text-sm italic">
+        <div className="text-gray-500 dark:text-gray-400 text-sm italic border border-[#b87333]">
           Ładowanie postów...
         </div>
       ) : posts.length === 0 ? (
-        <div className="text-gray-500 dark:text-gray-400 text-sm italic">
+        <div className="text-gray-500 dark:text-gray-400 text-sm italic border border-[#b87333]">
           Brak postów. Bądź pierwszy i dodaj coś!
         </div>
       ) : (

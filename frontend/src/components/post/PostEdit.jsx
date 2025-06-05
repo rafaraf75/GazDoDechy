@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Layout from '../Layout';
-import DashboardSidebar from '../DashboardSidebar';
+import Layout from '../common/Layout';
+import DashboardSidebar from '../dashboard/DashboardSidebar';
 
 const PostEdit = () => {
   const { id } = useParams();
