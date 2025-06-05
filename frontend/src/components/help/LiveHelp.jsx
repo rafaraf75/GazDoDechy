@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Layout from '../Layout';
-import DashboardSidebar from '../DashboardSidebar';
+import Layout from '../common/Layout';
+import DashboardSidebar from '../dashboard/DashboardSidebar';
 import MechanicRequestForm from './MechanicRequestForm';
 import Hero from '../common/Hero';
 
@@ -11,7 +11,7 @@ const LiveHelp = () => {
     <Layout leftSidebar={<DashboardSidebar />}>
       <Hero slug="help" />
       <div className="space-y-4">
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+        <div className="bg-white dark:bg-gray-800 border border-[#b87333] rounded-lg shadow p-4">
           <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">Napisz do mechanikia</h2>
           <p className="text-sm text-gray-600 dark:text-gray-300 italic">Dostępność: Pon–Pt 10:00–18:00</p>
           <button
@@ -32,7 +32,7 @@ const LiveHelp = () => {
             </div>
           )}
         </div>
-       <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+       <div className="bg-white dark:bg-gray-800 border border-[#b87333] rounded-lg shadow p-4">
           <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">Wideo konsultacja</h2>
           <p className="text-sm text-gray-600 dark:text-gray-300 italic">
             Porozmawiaj bezpośrednio z mechanikiem przez WhatsApp

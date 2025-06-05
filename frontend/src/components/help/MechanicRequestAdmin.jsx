@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Layout from '../Layout';
-import DashboardSidebar from '../DashboardSidebar';
+import Layout from '../common/Layout';
+import DashboardSidebar from '../dashboard/DashboardSidebar';
 import ArchivedRequestModal from '../help/ArchivedRequestModal';
 
 const MechanicRequestAdmin = () => {
@@ -102,13 +102,13 @@ const MechanicRequestAdmin = () => {
 
       <h2 className="text-lg font-semibold text-green-600 dark:text-green-400 mb-2">Aktywne</h2>
       {loading ? (
-        <p className="text-gray-600 dark:text-gray-300">Ładowanie zgłoszeń...</p>
+        <p className="text-gray-600 dark:text-gray-300 border border-[#b87333]">Ładowanie zgłoszeń...</p>
       ) : requests.length === 0 ? (
         <p className="text-gray-600 dark:text-gray-300">Brak aktywnych zgłoszeń.</p>
       ) : (
         <div className="space-y-4 mb-6">
           {requests.map((req) => (
-            <div key={req.id} className="bg-white dark:bg-gray-800 p-4 rounded shadow">
+            <div key={req.id} className="bg-white dark:bg-gray-800 p-4 rounded border border-[#b87333] shadow">
               <p className="text-sm text-gray-400">Dodane: {new Date(req.created_at).toLocaleString()}</p>
               <p><strong>Użytkownik:</strong> {req.name}</p>
               <p><strong>Telefon:</strong> {req.phone || 'Brak'}</p>
@@ -136,7 +136,7 @@ const MechanicRequestAdmin = () => {
                   />
                   <button
                     onClick={() => handleReplySubmit(req.id)}
-                    className="mt-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                    className="mt-2 bg-blue-600 text-white px-4 py-2 rounded border border-[#b87333] hover:bg-blue-700"
                   >
                     Wyślij odpowiedź
                   </button>
@@ -144,7 +144,7 @@ const MechanicRequestAdmin = () => {
               ) : (
                 <button
                   onClick={() => handleReplyClick(req.id)}
-                  className="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                  className="mt-4 bg-green-600 text-white px-4 py-2 border border-[#b87333] rounded hover:bg-green-700"
                 >
                   Odpowiedz
                 </button>
@@ -163,7 +163,7 @@ const MechanicRequestAdmin = () => {
           <div
             key={req.id}
             onClick={() => handleArchivedClick(req)}
-            className="bg-gray-100 dark:bg-gray-700 p-3 rounded cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition"
+            className="bg-gray-100 dark:bg-gray-700 p-3 border border-[#b87333] rounded cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition"
           >
             <p className="text-sm text-gray-600 dark:text-gray-300">
               Zgłoszenie od <strong>{req.name}</strong> ({req.brand} {req.model}, {req.year}) zostało zarchiwizowane.

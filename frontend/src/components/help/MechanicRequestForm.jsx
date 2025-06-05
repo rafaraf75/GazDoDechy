@@ -104,7 +104,7 @@ const MechanicRequestForm = ({ onSuccess }) => {
         value={form.name}
         onChange={handleChange}
         placeholder="Imię lub nick"
-        className="w-full p-2 border border-gray-600 rounded dark:bg-gray-700 dark:text-white"
+        className="w-full p-2 border border-[#b87333] rounded  dark:bg-gray-700 dark:text-white"
         required
       />
       <input
@@ -112,7 +112,7 @@ const MechanicRequestForm = ({ onSuccess }) => {
         value={form.phone}
         onChange={handleChange}
         placeholder="Telefon (opcjonalnie)"
-        className="w-full p-2 border border-gray-600 rounded dark:bg-gray-700 dark:text-white"
+        className="w-full p-2 border border-[#b87333] rounded dark:bg-gray-700 dark:text-white"
       />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -121,14 +121,14 @@ const MechanicRequestForm = ({ onSuccess }) => {
           value={form.brand}
           onChange={handleChange}
           placeholder="Marka"
-          className="p-2 border border-gray-600 rounded dark:bg-gray-700 dark:text-white"
+          className="p-2 border border-[#b87333] rounded dark:bg-gray-700 dark:text-white"
         />
         <input
           name="model"
           value={form.model}
           onChange={handleChange}
           placeholder="Model"
-          className="p-2 border border-gray-600 rounded dark:bg-gray-700 dark:text-white"
+          className="p-2 border border-[#b87333] rounded dark:bg-gray-700 dark:text-white"
         />
         <input
           name="year"
@@ -136,14 +136,14 @@ const MechanicRequestForm = ({ onSuccess }) => {
           onChange={handleChange}
           placeholder="Rok produkcji"
           type="number"
-          className="p-2 border border-gray-600 rounded dark:bg-gray-700 dark:text-white"
+          className="p-2 border border-[#b87333] rounded dark:bg-gray-700 dark:text-white"
         />
         <input
           name="engine"
           value={form.engine}
           onChange={handleChange}
           placeholder="Silnik"
-          className="p-2 border border-gray-600 rounded dark:bg-gray-700 dark:text-white"
+          className="p-2 border border-[#b87333] rounded dark:bg-gray-700 dark:text-white"
         />
       </div>
 
@@ -151,7 +151,7 @@ const MechanicRequestForm = ({ onSuccess }) => {
         name="gearbox"
         value={form.gearbox}
         onChange={handleChange}
-        className="w-full p-2 border border-gray-600 rounded dark:bg-gray-700 dark:text-white"
+        className="w-full p-2 border border-[#b87333] rounded dark:bg-gray-700 dark:text-white"
       >
         <option value="">Wybierz typ skrzyni</option>
         <option value="manualna">Manualna</option>
@@ -163,7 +163,7 @@ const MechanicRequestForm = ({ onSuccess }) => {
         value={form.description}
         onChange={handleChange}
         placeholder="Opisz problem..."
-        className="w-full p-2 border border-gray-600 rounded dark:bg-gray-700 dark:text-white"
+        className="w-full p-2 border border-[#b87333] rounded dark:bg-gray-700 dark:text-white"
         rows="4"
         required
       />
@@ -207,7 +207,7 @@ const MechanicRequestForm = ({ onSuccess }) => {
         </div>
       )}
 
-      <button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+      <button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded border border-[#b87333]">
         Wyślij zgłoszenie
       </button>
     </form>

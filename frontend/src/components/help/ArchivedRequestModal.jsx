@@ -14,7 +14,7 @@ const ArchivedRequestModal = ({ request, reply, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div className="fixed inset-0 bg-black bg-opacity-50 border border-[#b87333] flex justify-center items-center z-50">
       <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-2xl relative">
         <button onClick={onClose} className="absolute top-2 right-4 text-xl font-bold text-gray-600 dark:text-white">
           &times;
