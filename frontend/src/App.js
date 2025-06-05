@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { SocketProvider } from './context/SocketContext';
 
 
-import Login from './components/Login';
-import Register from './components/Register';
-import Dashboard from './components/Dashboard';
-import AdminPanel from './components/AdminPanel';
+import Login from './components/auth/Login';
+import Register from './components/auth/Register';
+import Dashboard from './components/dashboard/Dashboard';
+import AdminPanel from './components/dashboard/AdminPanel';
 
 // Nowe komponenty do sekcji użytkownika
 import UserProfile from './components/user/UserProfile';
