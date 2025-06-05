@@ -21,7 +21,7 @@ const Hero = ({ slug }) => {
 
   return (
     <div
-      className="w-full rounded-xl overflow-hidden mb-6 shadow p-10 text-center bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
+      className="w-full rounded-xl border border-[#b87333] overflow-hidden mb-6 shadow p-10 text-center bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
     >
       <h1 className="text-3xl font-bold mb-2">{heroData.title}</h1>
       <p className="text-md max-w-2xl mx-auto">{heroData.subtitle}</p>
