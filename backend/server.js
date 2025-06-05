@@ -1,3 +1,12 @@
+require('dotenv').config();
+
+const express = require('express');
+const cors = require('cors');
+const http = require('http');
+const { Server } = require('socket.io');
+const { supabaseAdmin } = require('./supabaseClient');
+
+// Importy tras
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const userStatusRoutes = require('./routes/userStatus');
@@ -22,50 +31,65 @@ const modelRoutes = require('./routes/models');
 const repairCategoryRoutes = require('./routes/repairCategories');
 const adFollowRoutes = require('./routes/adFollow');
 
-const express = require('express');
-const cors = require('cors');
-const http = require('http');
-const { Server } = require('socket.io');
-const onlineUsers = new Map();
-require('dotenv').config(); // wczytuje zmienne z .env
-
 const app = express();
 const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
     origin: '*',
-    methods: ['GET', 'POST']
-  }
+    methods: ['GET', 'POST'],
+  },
 });
+
+const onlineUsers = new Map();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
-// Socket.IO – logowanie połączeń
+// Socket.IO
 io.on('connection', (socket) => {
-  console.log(' Socket.IO: użytkownik połączony – ' + socket.id);
+  console.log('Socket.IO: użytkownik połączony –', socket.id);
 
-  // Oczekujemy, że frontend zaraz po połączeniu wyśle swoje userId
-  socket.on('user_connected', (userId) => {
+  let currentUserId = null;
+
+  socket.on('user_connected', async (userId) => {
+    currentUserId = userId;
     onlineUsers.set(userId, socket.id);
-    console.log(` Użytkownik ${userId} połączony.`);
+    console.log(`Użytkownik ${userId} połączony.`);
 
-    // Aktualizacja dla wszystkich
-    io.emit('users_online', Array.from(onlineUsers.keys()));
-  });
+    const { error } = await supabaseAdmin
+      .from('online_status')
+      .upsert({
+        user_id: userId,
+        is_online: true,
+        last_active: new Date().toISOString(),
+      });
 
-  socket.on('disconnect', () => {
-    for (const [userId, sockId] of onlineUsers.entries()) {
-      if (sockId === socket.id) {
-        onlineUsers.delete(userId);
-        console.log(` Użytkownik ${userId} rozłączony.`);
-        break;
-      }
+    if (error) {
+      console.error('Błąd upsert online_status:', error.message);
     }
 
     io.emit('users_online', Array.from(onlineUsers.keys()));
+  });
+
+  socket.on('user_disconnected', async (userId) => {
+  onlineUsers.delete(userId);
+  console.log(`Użytkownik ${userId} wylogował się ręcznie.`);
+
+  const { error } = await supabaseAdmin
+    .from('online_status')
+    .update({
+      is_online: false,
+      last_active: new Date().toISOString(),
+    })
+    .eq('user_id', userId);
+
+  if (error) {
+    console.error('Błąd aktualizacji online_status przy wylogowaniu:', error.message);
+  }
+
+  io.emit('users_online', Array.from(onlineUsers.keys()));
   });
 });
 
@@ -74,7 +98,7 @@ app.get('/', (req, res) => {
   res.send('GazDoDechy backend działa!');
 });
 
-// Trasy API
+// API endpoints
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/user-status', userStatusRoutes);

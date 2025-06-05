@@ -88,3 +88,25 @@ exports.getChatUsers = async (req, res) => {
     res.status(500).json({ message: 'Błąd pobierania użytkowników do czatu' });
   }
 };
+
+// Pobierz tylko tych, którzy są oznaczeni jako online
+exports.getOnlineUsers = async (req, res) => {
+  try {
+    const { data, error } = await supabaseAdmin
+      .from('online_status')
+      .select('user_id')
+      .eq('is_online', true);
+
+    if (error) throw error;
+
+    // Zwracamy tylko tablicę ID
+    const onlineIds = data.map((row) => row.user_id);
+    res.status(200).json(onlineIds);
+  } catch (err) {
+    console.error('Błąd pobierania statusów online:', err.message);
+    res.status(500).json({ message: 'Błąd pobierania statusów online' });
+  }
+};
+
+
+
