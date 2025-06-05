@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Layout from '../Layout';
+import Layout from '../common/Layout';
 import UserSidebar from './UserSidebar';
-import RightSidebar from '../RightSidebar';
+import RightSidebar from '../chat/RightSidebar';
 import axios from 'axios';
 import Hero from '../common/Hero';
 
@@ -95,7 +95,7 @@ const EditProfile = () => {
   return (
     <Layout leftSidebar={<UserSidebar />} rightSidebar={<RightSidebar />}>
       <Hero slug="user-settings" />
-    <div className="max-w-4xl mx-auto w-full bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-lg rounded-lg p-6">
+    <div className="max-w-4xl mx-auto w-full bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-lg  border border-[#b87333] rounded-lg p-6">
       <h1 className="text-2xl font-bold mb-4">Twój profil</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -104,7 +104,7 @@ const EditProfile = () => {
             type="email"
             value={formData.email}
             disabled
-            className="w-full border rounded p-2 bg-gray-100 dark:bg-gray-700 dark:text-gray-300"
+            className="w-full border rounded  border border-[#b87333] p-2 bg-gray-100 dark:bg-gray-700 dark:text-gray-300"
           />
         </div>
 
@@ -114,7 +114,7 @@ const EditProfile = () => {
             type="text"
             value={formData.role}
             disabled
-            className="w-full border rounded p-2 bg-gray-100 dark:bg-gray-700 dark:text-gray-300"
+            className="w-full border rounded  border border-[#b87333] p-2 bg-gray-100 dark:bg-gray-700 dark:text-gray-300"
           />
         </div>
 
@@ -125,7 +125,7 @@ const EditProfile = () => {
             name="username"
             value={formData.username}
             onChange={handleChange}
-            className="w-full border rounded p-2 dark:bg-gray-700 dark:text-gray-100"
+            className="w-full border rounded  border border-[#b87333] p-2 dark:bg-gray-700 dark:text-gray-100"
           />
         </div>
 
@@ -135,7 +135,7 @@ const EditProfile = () => {
             name="bio"
             value={formData.bio}
             onChange={handleChange}
-            className="w-full border rounded p-2 dark:bg-gray-700 dark:text-gray-100"
+            className="w-full border rounded  border border-[#b87333] p-2 dark:bg-gray-700 dark:text-gray-100"
           />
         </div>
 
@@ -166,7 +166,7 @@ const EditProfile = () => {
 
         <button
           type="submit"
-          className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
+          className="bg-blue-600 text-white py-2 px-4 rounded border border-[#b87333] hover:bg-blue-700"
         >
           Zapisz zmiany
         </button>
@@ -222,17 +222,17 @@ const EditProfile = () => {
 >
   <div>
     <label className="block font-semibold">Stare hasło</label>
-    <input type="password" name="oldPassword" className="w-full border rounded p-2 dark:bg-gray-700 dark:text-gray-100" />
+    <input type="password" name="oldPassword" className="w-full border rounded border border-[#b87333] p-2 dark:bg-gray-700 dark:text-gray-100" />
   </div>
   <div>
     <label className="block font-semibold">Nowe hasło</label>
-    <input type="password" name="newPassword" className="w-full border rounded p-2 dark:bg-gray-700 dark:text-gray-100" />
+    <input type="password" name="newPassword" className="w-full border rounded border border-[#b87333] p-2 dark:bg-gray-700 dark:text-gray-100" />
   </div>
   <div>
     <label className="block font-semibold">Powtórz nowe hasło</label>
-    <input type="password" name="confirmPassword" className="w-full border rounded p-2 dark:bg-gray-700 dark:text-gray-100" />
+    <input type="password" name="confirmPassword" className="w-full border rounded border border-[#b87333] p-2 dark:bg-gray-700 dark:text-gray-100" />
   </div>
-  <button type="submit" className="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700">
+  <button type="submit" className="bg-green-600 text-white py-2 px-4 rounded border border-[#b87333] hover:bg-green-700">
     Zmień hasło
   </button>
 </form>

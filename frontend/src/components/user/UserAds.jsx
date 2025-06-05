@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Layout from '../Layout';
+import Layout from '../common/Layout';
 import UserSidebar from './UserSidebar';
-import RightSidebar from '../RightSidebar';
+import RightSidebar from '../chat/RightSidebar';
 import axios from 'axios';
 import Hero from '../common/Hero';
 
@@ -46,7 +46,7 @@ const UserAds = () => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {ads.map(ad => (
-              <div key={ad.id} className="bg-white dark:bg-gray-800 p-4 rounded shadow text-gray-900 dark:text-gray-100">
+              <div key={ad.id} className="bg-white dark:bg-gray-800 p-4 rounded border border-[#b87333] shadow text-gray-900 dark:text-gray-100">
                 <img
                   src={ad.image_url || '/fallback.jpg'}
                   alt={ad.title}

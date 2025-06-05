@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Layout from '../Layout';
+import Layout from '../common/Layout';
 import UserSidebar from './UserSidebar';
-import RightSidebar from '../RightSidebar';
+import RightSidebar from '../chat/RightSidebar';
 import axios from 'axios';
 import Hero from '../common/Hero';
 
@@ -34,7 +34,7 @@ const UserEvents = () => {
             {events.map((event) => (
               <div
                 key={event.id}
-                className="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg shadow-md p-5"
+                className="bg-white dark:bg-gray-900  border border-[#b87333] rounded-lg shadow-md p-5"
               >
                 <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">
                   {event.title}

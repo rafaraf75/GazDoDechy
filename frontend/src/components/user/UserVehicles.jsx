@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Layout from '../Layout';
+import Layout from '../common/Layout';
 import UserSidebar from './UserSidebar';
-import RightSidebar from '../RightSidebar';
+import RightSidebar from '../chat/RightSidebar';
 import axios from 'axios';
 import PostImageSlider from '../post/PostImageSlider';
 import Hero from '../common/Hero';
@@ -35,7 +35,7 @@ const UserVehicles = () => {
         ) : (
           <div className="space-y-6">
             {userPosts.map((post, idx) => (
-              <div key={idx} className="w-full bg-white dark:bg-gray-800 p-4 rounded shadow">
+              <div key={idx} className="w-full bg-white dark:bg-gray-800 p-4 rounded border border-[#b87333] shadow">
                 {post.post_images?.length > 0 && (
                   <PostImageSlider images={post.post_images} />
                 )}

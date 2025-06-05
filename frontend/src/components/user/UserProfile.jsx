@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Layout from '../Layout';
+import Layout from '../common/Layout';
 import UserSidebar from './UserSidebar';
-import RightSidebar from '../RightSidebar';
+import RightSidebar from '../chat/RightSidebar';
 import Post from '../post/Post';
 import axios from 'axios';
 
@@ -74,7 +74,7 @@ const UserProfile = () => {
   return (
     <Layout leftSidebar={<UserSidebar />} rightSidebar={<RightSidebar />}>
       {/* Profil użytkownika */}
-      <div className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg shadow p-4">
+      <div className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg  border border-[#b87333] shadow p-4">
         <div className="flex items-center space-x-4">
           {profilePicture ? (
             <img
@@ -95,7 +95,7 @@ const UserProfile = () => {
       </div>
 
       {/* Posty użytkownika */}
-      <div className="mt-6 space-y-6">
+      <div className="mt-6 space-y-6  border border-[#b87333]">
         <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
           Posty użytkownika
         </h3>
