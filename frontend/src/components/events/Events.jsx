@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Layout from '../Layout';
-import DashboardSidebar from '../DashboardSidebar';
-import RightSidebar from '../RightSidebar';
+import Layout from '../common/Layout';
+import DashboardSidebar from '../dashboard/DashboardSidebar';
+import RightSidebar from '../chat/RightSidebar';
 import CalendarView from './CalendarView';
 import EventForm from './EventForm';
 import EventList from './EventList';
@@ -31,7 +31,7 @@ const Events = () => {
     <Layout leftSidebar={<DashboardSidebar />} rightSidebar={<RightSidebar />}>
       <div className="space-y-6">
         <Hero slug="events" />
-        <div className="flex flex-col lg:flex-row gap-6 bg-white dark:bg-gray-800 p-6 rounded shadow">
+        <div className="flex flex-col lg:flex-row gap-6 bg-white dark:bg-gray-800 p-6 rounded border border-[#b87333] shadow">
           {/* Nowy kalendarz */}
           <div className="w-full lg:w-1/3">
             <CalendarView onDateSelect={handleDateChange} selectedDate={selectedDate} />

@@ -50,10 +50,10 @@ const EventDetailsModal = ({ event, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center px-4">
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-md w-full text-gray-900 dark:text-gray-100">
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-50  border border-[#b87333] flex items-center justify-center px-4">
+      <div className="bg-white  border border-[#b87333] dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-md w-full text-gray-900 dark:text-gray-100">
         <h3 className="text-xl font-bold mb-2">{event.title}</h3>
-        <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
+        <p className="text-sm  text-gray-600 dark:text-gray-300 mb-2">
           <strong>Data:</strong> {event.date}
         </p>
         <p className="mb-2">{event.description}</p>

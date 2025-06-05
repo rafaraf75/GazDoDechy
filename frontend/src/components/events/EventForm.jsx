@@ -26,14 +26,14 @@ const EventForm = ({ onEventAdded }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 bg-white dark:bg-gray-800 p-4 rounded shadow">
+    <form onSubmit={handleSubmit} className="space-y-4 bg-white border border-[#b87333] dark:bg-gray-800 p-4 rounded shadow">
       <input
         type="text"
         name="title"
         placeholder="Tytuł wydarzenia"
         value={formData.title}
         onChange={handleChange}
-        className="w-full p-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+        className="w-full p-2 rounded border border-[#b87333] bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
         required
       />
       <textarea
@@ -41,19 +41,19 @@ const EventForm = ({ onEventAdded }) => {
         placeholder="Opis wydarzenia"
         value={formData.description}
         onChange={handleChange}
-        className="w-full p-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+        className="w-full p-2 rounded border border-[#b87333] bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
       />
       <input
         type="date"
         name="date"
         value={formData.date}
         onChange={handleChange}
-        className="w-full p-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+        className="w-full p-2 rounded border border-[#b87333] bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
         required
       />
       <button
         type="submit"
-        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded border border-[#b87333]"
       >
         Dodaj wydarzenie
       </button>
