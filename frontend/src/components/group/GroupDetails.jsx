@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Layout from '../Layout';
-import DashboardSidebar from '../DashboardSidebar';
-import RightSidebar from '../RightSidebar';
+import Layout from '../common/Layout';
+import DashboardSidebar from '../dashboard/DashboardSidebar';
+import RightSidebar from '../chat/RightSidebar';
 import PostForm from '../post/PostForm';
 import PostFeed from '../post/PostFeed';
 import axios from 'axios';
@@ -78,7 +78,7 @@ const GroupDetails = () => {
 
   return (
     <Layout leftSidebar={<DashboardSidebar />} rightSidebar={<RightSidebar />}>
-      <div className="bg-white dark:bg-gray-800 p-6 rounded shadow mb-6">
+      <div className="bg-white dark:bg-gray-800 p-6 rounded  border border-[#b87333] shadow mb-6">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">{group.name}</h1>
         <p className="text-gray-600 dark:text-gray-300 mb-3">{group.description}</p>
 
