@@ -39,7 +39,7 @@ const PrivateChatModal = ({ user, onClose, socket, userId, senderName }) => {
     setChatLog((prev) => [...prev, { ...newMsg, fromMe: true }]);
     setMessage('');
 
-    // Zapis do bazy (opcjonalnie, ale warto!)
+    // Zapis do bazy
     try {
       await fetch('http://localhost:5000/api/chat/message', {
         method: 'POST',

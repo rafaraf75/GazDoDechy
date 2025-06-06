@@ -15,7 +15,6 @@ const Tips = () => {
         <p className="text-gray-400 mb-6">
           Tu znajdziesz porady, filmy i materiały naprawcze.
         </p>
-
         {/* Komponent porad z YouTube */}
         <YtHelp />
       </div>

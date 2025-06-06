@@ -19,7 +19,7 @@ const Layout = ({ children, leftSidebar = null, rightSidebar = null }) => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 px-4">
         {/* Lewy sidebar */}
         {leftSidebar && (
-          <aside className="col-span-1 hidden md:block sticky top-[72px] h-[calc(100vh-72px)]">
+          <aside className="col-span-1 hidden md:block sticky top-[96px] h-[calc(100vh-96px)] overflow-y-auto">
             {leftSidebar}
           </aside>
         )}
@@ -31,7 +31,7 @@ const Layout = ({ children, leftSidebar = null, rightSidebar = null }) => {
 
         {/* Prawy sidebar */}
         {rightSidebar && (
-          <aside className="col-span-1 hidden md:block sticky top-[72px] h-[calc(100vh-72px)]">
+          <aside className="col-span-1 hidden md:block sticky top-[96px] h-[calc(100vh-96px)] overflow-y-auto">
             {rightSidebar}
           </aside>
         )}

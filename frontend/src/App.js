@@ -8,7 +8,6 @@ import Register from './components/auth/Register';
 import Dashboard from './components/dashboard/Dashboard';
 import AdminPanel from './components/dashboard/AdminPanel';
 
-// Nowe komponenty do sekcji użytkownika
 import UserProfile from './components/user/UserProfile';
 import EditProfile from './components/user/EditProfile';
 import UserVehicles from './components/user/UserVehicles';

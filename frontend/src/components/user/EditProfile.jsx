@@ -92,6 +92,24 @@ const EditProfile = () => {
     }
   };
 
+  const handleDeleteAccount = async () => {
+  const confirmed = window.confirm('Czy na pewno chcesz usunąć swoje konto? Tej operacji nie można cofnąć.');
+
+  if (!confirmed) return;
+
+  try {
+    await axios.delete(`http://localhost:5000/api/auth/delete/${userId}`);
+    alert('Konto zostało usunięte.');
+
+    // Czyść dane lokalne i przenieś na stronę logowania
+    localStorage.clear();
+    window.location.href = '/login';
+  } catch (err) {
+    console.error('Błąd usuwania konta:', err);
+    alert('Wystąpił problem podczas usuwania konta.');
+  }
+};
+
   return (
     <Layout leftSidebar={<UserSidebar />} rightSidebar={<RightSidebar />}>
       <Hero slug="user-settings" />
@@ -236,6 +254,18 @@ const EditProfile = () => {
     Zmień hasło
   </button>
 </form>
+<hr className="my-6 border-gray-300 dark:border-gray-600" />
+
+<div className="mt-6">
+  <h2 className="text-xl font-semibold mb-2 text-red-600">Usuń konto</h2>
+  <p className="mb-4 text-sm text-gray-400">Tej operacji nie można cofnąć. Wszystkie Twoje dane zostaną usunięte.</p>
+  <button
+    onClick={handleDeleteAccount}
+    className="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded border border-[#b87333]"
+  >
+    Usuń konto
+  </button>
+</div>
     </div>
     </Layout>
   );

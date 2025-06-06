@@ -55,27 +55,27 @@ const MechanicRequestAdmin = () => {
 
   const handleReplySubmit = async (id) => {
     try {
-      // 1. Wyślij odpowiedź
+      // Wyślij odpowiedź
       await axios.post('http://localhost:5000/api/mechanic-replies', {
         request_id: id,
         reply: replyContent,
       });
 
-      // 2. Zarchiwizuj zgłoszenie
+      // Zarchiwizuj zgłoszenie
       await axios.patch(`http://localhost:5000/api/mechanic-request/${id}/archive`);
 
-      // 3. Przenieś do zarchiwizowanych lokalnie
+      // Przenieś do zarchiwizowanych lokalnie
       const archivedRequest = requests.find((r) => r.id === id);
       if (archivedRequest) {
         setArchived((prev) => [...prev, { ...archivedRequest, is_archived: true }]);
         setRequests((prev) => prev.filter((r) => r.id !== id));
       }
 
-      // 4. Resetuj stan formularza
+      // Resetuj stan formularza
       setReplyingTo(null);
       setReplyContent('');
 
-      // 5. Pokaż potwierdzenie
+      // Pokaż potwierdzenie
       alert('Wiadomość wysłana i zgłoszenie zostało zarchiwizowane.');
     } catch (err) {
       console.error('Błąd wysyłania odpowiedzi:', err);

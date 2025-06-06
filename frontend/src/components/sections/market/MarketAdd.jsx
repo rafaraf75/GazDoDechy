@@ -7,8 +7,8 @@ const MarketAdd = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [categoryId, setCategoryId] = useState('');
-  const [imageFiles, setImageFiles] = useState([]); // wiele zdjęć
-  const [previewUrls, setPreviewUrls] = useState([]); // podglądy
+  const [imageFiles, setImageFiles] = useState([]);
+  const [previewUrls, setPreviewUrls] = useState([]);
   const [price, setPrice] = useState('');
   const [year, setYear] = useState('');
   const [mileage, setMileage] = useState('');
@@ -88,7 +88,6 @@ const MarketAdd = () => {
     return uploaded;
   };
 
-  // --- ZAMIENIAMY CAŁE handleSubmit ---
 const handleSubmit = async (e) => {
   e.preventDefault();
   const userId = localStorage.getItem('userId');

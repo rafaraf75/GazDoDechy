@@ -11,7 +11,7 @@ const MarketDetails = () => {
   const [isFollowing, setIsFollowing] = useState(false);
   const userId = localStorage.getItem('userId');
 
-  // 🧠 Wyciągamy poza useEffect
+  // Wyciągamy poza useEffect
   const checkFollowStatus = useCallback(async () => {
     try {
       const res = await axios.get(`http://localhost:5000/api/followed-ads/${userId}`);

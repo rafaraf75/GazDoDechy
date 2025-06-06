@@ -49,9 +49,8 @@ const RightSidebar = () => {
       });
 
     // Ustaw interwał co 10s do odświeżenia listy online
-    const interval = setInterval(fetchOnlineUsers, 5000);
+    const interval = setInterval(fetchOnlineUsers, 2000);
 
-    // Posprzątaj po odmontowaniu komponentu
     return () => {
       socket.off('users_online');
       clearInterval(interval);

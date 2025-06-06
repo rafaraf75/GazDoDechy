@@ -14,7 +14,7 @@ const Navbar = ({ theme, setTheme }) => {
   const isDark = theme === 'dark';
 
   const handleLogout = () => {
-    // WYŚLIJ EVENT O WYLOGOWANIU
+    // Wyślij event o wylogowaniu
     if (socket && socket.connected && userId) {
       socket.emit('user_disconnected', userId);
     }
