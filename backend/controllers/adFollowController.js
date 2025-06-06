@@ -1,7 +1,5 @@
 const { supabaseAdmin } = require('../supabaseClient');
 
-// controllers/adFollowController.js
-
 exports.followAd = async (req, res) => {
   const { userId, adId } = req.body;
 

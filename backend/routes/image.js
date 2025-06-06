@@ -7,7 +7,6 @@ const imageController = require('../controllers/imageController');
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-// POST /upload – przesyłanie jednego pliku
 router.post('/upload', upload.single('plik'), imageController.uploadImage);
 
 module.exports = router;

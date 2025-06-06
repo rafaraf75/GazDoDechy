@@ -48,7 +48,7 @@ exports.getAllUsersWithStatus = async (req, res) => {
       const status = statuses.find(s => s.user_id === user.id);
       return {
         ...user,
-        isBlocked: status ? status.is_blocked : false // false domyślnie, jeśli brak wpisu
+        isBlocked: status ? status.is_blocked : false
       };
     });
 

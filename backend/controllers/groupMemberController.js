@@ -30,7 +30,7 @@ exports.checkMembership = async (req, res) => {
       .eq('user_id', user_id)
       .single();
 
-    if (error && error.code !== 'PGRST116') throw error; // 'No rows found'
+    if (error && error.code !== 'PGRST116') throw error;
 
     res.json({ isMember: !!data });
   } catch (err) {

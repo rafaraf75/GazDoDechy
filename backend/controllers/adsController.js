@@ -219,7 +219,7 @@ exports.deleteAd = async (req, res) => {
   const { id } = req.params;
 
   try {
-    // Najpierw pobierz dane ogłoszenia (żeby mieć public_ids)
+    // Pobierz dane ogłoszenia (żeby mieć public_ids)
     const { data: ad, error: fetchError } = await supabaseAdmin
       .from('ads')
       .select('image_public_ids')

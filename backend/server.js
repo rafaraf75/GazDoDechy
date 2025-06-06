@@ -5,7 +5,6 @@ const cors = require('cors');
 const http = require('http');
 const { Server } = require('socket.io');
 const { supabaseAdmin } = require('./supabaseClient');
-
 // Importy tras
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');

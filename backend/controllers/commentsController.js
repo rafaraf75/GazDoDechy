@@ -3,7 +3,6 @@ const { supabaseAdmin } = require('../supabaseClient');
 // GET /api/comments/:postId
 exports.getCommentsByPostId = async (req, res) => {
   const { postId } = req.params;
-
   const { data, error } = await supabaseAdmin
     .from('comments')
     .select(`
@@ -20,7 +19,6 @@ exports.getCommentsByPostId = async (req, res) => {
     console.error('Błąd pobierania komentarzy:', error);
     return res.status(500).json({ message: 'Błąd pobierania komentarzy' });
   }
-
   res.status(200).json(data);
 };
 
@@ -32,11 +30,9 @@ exports.addComment = async (req, res) => {
   if (!content || content.trim() === '') {
     return res.status(400).json({ message: 'Treść komentarza jest wymagana' });
   }
-
   if (!user_id) {
     return res.status(400).json({ message: 'Brak user_id w żądaniu' });
   }
-
   const { data, error } = await supabaseAdmin
     .from('comments')
     .insert([
@@ -54,6 +50,5 @@ exports.addComment = async (req, res) => {
     console.error('Błąd dodawania komentarza:', error);
     return res.status(500).json({ message: 'Nie udało się dodać komentarza' });
   }
-
   res.status(201).json(data);
 };

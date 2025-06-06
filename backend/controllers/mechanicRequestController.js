@@ -152,3 +152,37 @@ exports.getArchivedRequests = async (req, res) => {
     res.status(500).json({ message: 'Błąd serwera' });
   }
 };
+
+// GET /api/mechanic-requests/with-replies/:userId
+exports.getRequestsWithReplies = async (req, res) => {
+  const { user_id } = req.params;
+
+  try {
+    const { data: requests, error: reqError } = await supabaseAdmin
+      .from('mechanic_requests')
+      .select('*')
+      .eq('user_id', user_id)
+      .order('created_at', { ascending: false });
+
+    if (reqError) throw reqError;
+
+    const requestIds = requests.map(r => r.id);
+
+    const { data: replies, error: repError } = await supabaseAdmin
+      .from('mechanic_replies')
+      .select('request_id, reply')
+      .in('request_id', requestIds);
+
+    if (repError) throw repError;
+
+    const combined = requests.map(req => ({
+      ...req,
+      reply: replies.find(r => r.request_id === req.id)?.reply || null,
+    }));
+
+    res.status(200).json(combined);
+  } catch (err) {
+    console.error('Błąd łączenia zgłoszeń z odpowiedziami:', err);
+    res.status(500).json({ message: 'Błąd serwera' });
+  }
+};
