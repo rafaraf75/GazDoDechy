@@ -107,6 +107,3 @@ exports.getOnlineUsers = async (req, res) => {
     res.status(500).json({ message: 'Błąd pobierania statusów online' });
   }
 };
-
-
-

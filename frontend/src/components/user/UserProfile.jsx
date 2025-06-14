@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '../common/Layout';
 import UserSidebar from './UserSidebar';
 import RightSidebar from '../chat/RightSidebar';
-import Post from '../post/Post';
+import PostImageSlider from '../post/PostImageSlider';
 import axios from 'axios';
 
 const UserProfile = () => {
@@ -52,29 +52,10 @@ const UserProfile = () => {
     fetchUserPosts();
   }, [navigate]);
 
-  const handleEdit = (postId) => {
-    navigate(`/post/edit/${postId}`);
-  };
-
-  const handleDelete = async (postId) => {
-    const confirm = window.confirm('Czy na pewno chcesz usunąć ten post?');
-    if (!confirm) return;
-
-    try {
-      await axios.delete(`http://localhost:5000/api/posts/${postId}`, {
-        data: { user_id: localStorage.getItem('userId') }
-      });
-      setUserPosts(prev => prev.filter(p => p.id !== postId));
-    } catch (err) {
-      console.error('Błąd usuwania posta:', err);
-      alert('Wystąpił błąd przy usuwaniu posta');
-    }
-  };
-
   return (
     <Layout leftSidebar={<UserSidebar />} rightSidebar={<RightSidebar />}>
       {/* Profil użytkownika */}
-      <div className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg  border border-[#b87333] shadow p-4">
+      <div className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg border border-[#b87333] shadow p-4">
         <div className="flex items-center space-x-4">
           {profilePicture ? (
             <img
@@ -95,7 +76,7 @@ const UserProfile = () => {
       </div>
 
       {/* Posty użytkownika */}
-      <div className="mt-6 space-y-6  border border-[#b87333]">
+      <div className="mt-6 space-y-6 border border-[#b87333] p-4 rounded">
         <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
           Posty użytkownika
         </h3>
@@ -104,13 +85,14 @@ const UserProfile = () => {
           <p className="text-sm text-gray-500 dark:text-gray-300 italic">Brak postów.</p>
         ) : (
           userPosts.map((post) => (
-            <Post
-              key={post.id}
-              post={post}
-              onEdit={() => handleEdit(post.id)}
-              onDelete={() => handleDelete(post.id)}
-              showActions={true}
-            />
+            <div key={post.id} className="bg-white dark:bg-gray-800 p-4 rounded shadow border">
+              {post.post_images?.length > 0 && (
+                <PostImageSlider images={post.post_images} />
+              )}
+              <div className="mt-2 text-sm text-gray-700 dark:text-gray-300">
+                {post.description || 'Brak opisu'}
+              </div>
+            </div>
           ))
         )}
       </div>
