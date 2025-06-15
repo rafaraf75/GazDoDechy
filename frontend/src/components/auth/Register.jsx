@@ -8,8 +8,27 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
 
+  const validate = () => {
+    if (!email.includes('@')) {
+      setMessage('Nieprawidłowy adres e-mail.');
+      return false;
+    }
+    if (username.trim().length < 3) {
+      setMessage('Nazwa użytkownika musi mieć min. 3 znaki.');
+      return false;
+    }
+    if (password.length < 6) {
+      setMessage('Hasło musi mieć min. 6 znaków.');
+      return false;
+    }
+    return true;
+  };
+
   const handleRegister = async (e) => {
     e.preventDefault();
+
+    if (!validate()) return;
+
     try {
       await axios.post('http://localhost:5000/api/auth/register', {
         email,
