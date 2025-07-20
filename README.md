@@ -50,6 +50,8 @@ cd frontend
 npm install
 npm start
 
+### Backend
+
 ```bash
 cd backend
 npm install
