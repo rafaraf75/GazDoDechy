@@ -11,6 +11,7 @@ Aplikacja oferuje:
 - poradniki i filmy instruktażowe,
 - system wydarzeń (np. zloty, rajdy),
 - profil użytkownika z pełną edycją danych i treści.
+- czat w czasie rzeczywistym.
 
 Projekt został zrealizowany jako aplikacja typu fullstack z podziałem na frontend i backend.
 
