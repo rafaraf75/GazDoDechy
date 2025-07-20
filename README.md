@@ -43,17 +43,15 @@ Projekt został zrealizowany jako aplikacja typu fullstack z podziałem na front
 
 ## Uruchomienie lokalne
 
-### Frontend
+### Frontend i Backend
 
 ```bash
 cd frontend
 npm install
 npm start
 
-### Backend
-
-```bash
 cd backend
 npm install
 npm start
+
 
